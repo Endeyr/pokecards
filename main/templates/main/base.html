@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{% block title %}{% endblock title %} | Pokecards</title>
+		<link href="{% static 'static/styles.css' %}" rel="stylesheet" />
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body>
+		<nav class="flex justify-between items-center">
+			<div class="space-x-6">
+				<a
+					href="{% url 'main:index' %}"
+					class="text-xl font-semibold hover:text-gray-500"
+					>Home</a
+				>
+			</div>
+			<div class="space-x-6">
+				<a href="#" class="text-xl font-semibold hover:text-gray-500"
+					>Advanced Search</a
+				>
+				<a
+					href="{% url 'users:account' %}"
+					class="text-xl font-semibold hover:text-gray-500"
+					>Account</a
+				>
+				<a
+					href="{% url 'users:sign-in' %}"
+					class="text-xl font-semibold hover:text-gray-500"
+					>Login</a
+				>
+				<a
+					href="{% url 'users:sign-up' %}"
+					class="text-xl font-semibold hover:text-gray-500"
+					>Register</a
+				>
+				<a
+					href="{% url 'users:sign-out' %}"
+					class="text-xl font-semibold hover:text-gray-500"
+					>Logout</a
+				>
+			</div>
+		</nav>
+
+		<div>
+			{% block content %} {% endblock content %}{% block script %}
+			<script src="{% static 'static/main.js' %}"></script>
+			{% endblock script %}
+		</div>
+		<footer></footer>
+	</body>
+</html>

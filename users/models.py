@@ -9,7 +9,6 @@ class UserProfile(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    collections = models.ForeignKey()
 
     has_profile = models.BooleanField(default=False)
 
