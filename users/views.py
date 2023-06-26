@@ -34,7 +34,8 @@ class SignUpView(View):
     '''
 
     def get(self, request):
-        context = {}
+        form = UserForm()
+        context = {"form": form, }
         return render(request, "users/sign_up.html", context)
 
     def post(self, request):
@@ -48,7 +49,8 @@ class SignInView(View):
     '''
 
     def get(self, request):
-        context = {}
+        form = AuthForm()
+        context = {"form": form, }
         return render(request, "users/sign_in.html", context)
 
     def post(self, request):

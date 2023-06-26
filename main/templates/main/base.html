@@ -44,7 +44,9 @@
 			</div>
 		</nav>
 
-		<div class="min-h-fit">
+		<div
+			class="container mx-auto min-h-[87vh] flex justify-center item-center gap-2"
+		>
 			{% block content %} {% endblock content %}{% block script %}
 			<script src="{% static 'static/main.js' %}"></script>
 			{% endblock script %}

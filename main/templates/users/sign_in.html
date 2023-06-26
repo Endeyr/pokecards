@@ -1,4 +1,17 @@
 {% extends 'main/base.html' %} {% block title %} Sign In {% endblock title %}
 {%block content %}
-<h1>Hello from sign_in.html</h1>
+<section class="flex flex-col justify-center items-center gap-2">
+	<h1>Sign Up</h1>
+	<form method="post">
+		{% csrf_token %}
+		<div class="m-2 p-2 flex flex-col gap-2">{{ form.as_p }}</div>
+		<div class="flex justify-center">
+			<button
+				class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm p-2 min-w-[90%]"
+			>
+				Submit
+			</button>
+		</div>
+	</form>
+</section>
 {% endblock content %}
