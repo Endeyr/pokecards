@@ -9,8 +9,6 @@ The Pokémon Trading Card Collection Builder is a web application built with Dja
 - User registration and authentication system.
 - Browse and search Pokémon trading cards from a comprehensive database.
 - Add cards to your collection and manage your collection.
-- Trade cards with other users.
-- Deck building functionality to create Pokémon card decks.
 - User-friendly interface for an enjoyable user experience.
 
 ## Installation
@@ -65,9 +63,6 @@ The Pokémon Trading Card Collection Builder is a web application built with Dja
 - Register a new account or log in with an existing account.
 - Explore the collection of Pokémon trading cards.
 - Add cards to your collection and manage your collection.
-- Create and manage your card decks.
-- Trade cards with other users.
-- Enjoy building your ultimate Pokémon trading card collection!
 
 ## Contributing
 
@@ -81,3 +76,15 @@ This project is licensed under the MIT License.
 
 This application uses data from the Pokémon TCG API. (Link to the API documentation)
 Special thanks to the Django and Python communities for their excellent frameworks and libraries.
+Inspired by https://pokemontcg.guru/
+
+## Project
+
+This project is a web application capstone for the CS50's Web Programming course. It is for educational purposes only.
+This project is not a social media or e-commerce site but built to utilize an api, explore and create databases, be mobile-responsive, and utilize django for the back-end and javascript for the front-end.
+
+## Distinctiveness and Complexity
+
+## File Explanations
+
+## Additional Information
