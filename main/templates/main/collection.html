@@ -1,7 +1,79 @@
 {% extends 'main/base.html' %} {% block title %} Collection {% endblock title %}
 {%block content %}
 <section class="">
-	<h1>Hello from collection</h1>
-	<p>Collection</p>
+	<p>Collection - Can change which collection you are viewing</p>
+	<div>
+		<p>View as List / Image</p>
+		<p>
+			Sorted by Name / Release Data / Set / Number / Rarity
+			<span>Asc / Dsc</span>
+		</p>
+	</div>
+	<div class="mt-2 hidden">
+		<table class="table-auto border-collapse border border-slate-400">
+			<thead>
+				<tr>
+					<th class="font-bold p-2 text-left border border-slate-300">Set</th>
+					<th class="font-bold p-2 text-left border border-slate-300">No</th>
+					<th class="font-bold p-2 text-left border border-slate-300">Name</th>
+					<th class="font-bold p-2 text-left border border-slate-300">
+						Rarity
+					</th>
+					<th class="font-bold p-2 text-left border border-slate-300">Types</th>
+					<th class="font-bold p-2 text-left border border-slate-300">
+						Supertype
+					</th>
+					<th class="font-bold p-2 text-left border border-slate-300">
+						Subtypes
+					</th>
+					<th class="font-bold p-2 text-left border border-slate-300">Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="p-2 text-left border border-slate-300">Evolutions</td>
+					<td class="p-2 text-left border border-slate-300">11</td>
+					<td class="p-2 text-left border border-slate-300">Charizard</td>
+					<td class="p-2 text-left border border-slate-300">Rare</td>
+					<td class="p-2 text-left border border-slate-300">Fire</td>
+					<td class="p-2 text-left border border-slate-300">Pokemon</td>
+					<td class="p-2 text-left border border-slate-300">Stage 2</td>
+					<td class="p-2 text-left border border-slate-300">$54.44</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="grid grid-cols-5 gap-2 mt-2">
+		<div class="">
+			<a href="#"
+				><img class="" src="https://images.pokemontcg.io/sv2/8.png"
+			/></a>
+		</div>
+		<div class="">
+			<a href="#"
+				><img class="" src="https://images.pokemontcg.io/sv2/8.png"
+			/></a>
+		</div>
+		<div class="">
+			<a href="#"
+				><img class="" src="https://images.pokemontcg.io/sv2/8.png"
+			/></a>
+		</div>
+		<div class="">
+			<a href="#"
+				><img class="" src="https://images.pokemontcg.io/sv2/8.png"
+			/></a>
+		</div>
+		<div class="">
+			<a href="#"
+				><img class="" src="https://images.pokemontcg.io/sv2/8.png"
+			/></a>
+		</div>
+		<div class="">
+			<a href="#"
+				><img class="" src="https://images.pokemontcg.io/sv2/8.png"
+			/></a>
+		</div>
+	</div>
 </section>
 {% endblock content %}

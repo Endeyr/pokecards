@@ -1,7 +1,70 @@
 {% extends 'main/base.html' %} {% block title %} Card {% endblock title %}
 {%block content %}
 <section class="">
-	<h1>Hello from card</h1>
-	<p>Card</p>
+	<div class="flex flex-row justify-between items-center gap-16">
+		<div class="mt-8">
+			<img
+				class="box-border h-96"
+				src="https://images.pokemontcg.io/sv2/5_hires.png"
+			/>
+		</div>
+		<div class="flex flex-col mt-2">
+			<div class="flex flex-row gap-2">
+				<p>Name</p>
+				<p>Subtypes</p>
+				<p>HP</p>
+				<p>Types</p>
+			</div>
+			<div class="flex flex-row gap-2">
+				<p>Price</p>
+			</div>
+			<div class="flex flex-row gap-2">
+				<p>Abilities</p>
+				<p>Info</p>
+			</div>
+			<div class="flex flex-row gap-2">
+				<p>Attacks</p>
+				<p>Info</p>
+			</div>
+			<div class="flex flex-row gap-2">
+				<p>Rules</p>
+				<p>Info</p>
+			</div>
+			<div class="grid-cols-3">
+				<div class="flex flex-row gap-2">
+					<p>Weakness</p>
+					<p>info</p>
+				</div>
+				<div class="flex flex-row gap-2">
+					<p>Resistance</p>
+					<p>info</p>
+				</div>
+				<div class="flex flex-row gap-2">
+					<p>Retreat Cost</p>
+					<p>info</p>
+				</div>
+				<div class="flex flex-row gap-2">
+					<p>Artist</p>
+					<p>info</p>
+				</div>
+				<div class="flex flex-row gap-2">
+					<p>Rarity</p>
+					<p>info</p>
+				</div>
+				<div class="flex flex-row gap-2">
+					<p>Set</p>
+					<p>info</p>
+				</div>
+				<div class="flex flex-row gap-2">
+					<p>Number</p>
+					<p>info</p>
+				</div>
+				<div class="flex flex-row gap-2">
+					<p>In Collection</p>
+					<p>checkbox</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 {% endblock content %}
