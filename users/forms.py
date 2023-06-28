@@ -21,24 +21,7 @@ class UserForm(UserCreationForm):
     password2 = forms.CharField(widget=forms.PasswordInput(
         attrs={'placeholder': '*Confirm Password...', 'class': INPUT_CLASSES}))
 
-    # reCAPTCHA token
-    token = forms.CharField(widget=forms.HiddenInput())
-
     class Meta:
         model = User
         fields = ('username', 'first_name',
                   'last_name', 'password1', 'password2')
-
-
-class AuthForm(AuthenticationForm):
-    '''
-    Form that uses built-in AuthenticationForm to handle user auth
-    '''
-    username = forms.EmailField(max_length=254, required=True, widget=forms.TextInput(
-        attrs={'placeholder': '*Email...', 'class': INPUT_CLASSES}))
-    password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder': '*Password...', 'class': INPUT_CLASSES}))
-
-    class Meta:
-        model = User
-        fields = ('username', 'password')

@@ -75,7 +75,7 @@ This project is licensed under the MIT License.
 ## Acknowledgements
 
 This application uses data from the Pokémon TCG API. (Link to the API documentation)
-Special thanks to the Django and Python communities for their excellent frameworks and libraries.
+Special thanks to the Django, Python, and TailwindCSS communities for their excellent frameworks and libraries.
 Inspired by https://pokemontcg.guru/
 
 ## Project

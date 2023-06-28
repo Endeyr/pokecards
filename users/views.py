@@ -6,7 +6,6 @@ from django.views import View
 
 from .forms import (
     UserForm,
-    AuthForm,
 )
 
 
@@ -30,32 +29,52 @@ def profile_view(request):
 
 class SignUpView(View):
     '''
-    Class View for user Sign-up
+    Class-based view for user sign-up
     '''
+    template_name = 'users/sign_up.html'
+    form_class = UserForm()
 
     def get(self, request):
-        form = UserForm()
-        context = {"form": form, }
-        return render(request, "users/sign_up.html", context)
+        form = self.form_class
+        message = ''
+        context = {"form": form, "message": message}
+        return render(request, self.template_name, context)
 
     def post(self, request):
-        context = {}
-        return redirect(reverse('users:account'))
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.email = user.username
+            user.save()
+            login(request, user)
+            return redirect('users:account')
+
+        message = "Registration failed!"
+        context = {"form": form, "message": message}
+        return render(request, self.template_name, context)
 
 
 class SignInView(View):
     '''
-    Class View for user Sign-in
+    Class-based view for user sign-in
     '''
+    template_name = 'users/sign_in.html'
 
     def get(self, request):
-        form = AuthForm()
-        context = {"form": form, }
-        return render(request, "users/sign_in.html", context)
+        context = {}
+        return render(request, self.template_name, context)
 
     def post(self, request):
-        context = {}
-        return redirect(reverse('users:account'))
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('users:account')
+        else:
+            message = "Invalid username and/or password."
+            context = {"message": message}
+            return render(request, self.template_name, context)
 
 
 def sign_out(request):

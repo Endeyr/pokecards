@@ -6,7 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>{% block title %}{% endblock title %} | Pokecards</title>
-		<link href="{% static 'static/styles.css' %}" rel="stylesheet" />
+		<link href="{% static 'main.css' %}" rel="stylesheet" />
 		<script src="https://cdn.tailwindcss.com"></script>
 	</head>
 	<body>
@@ -21,11 +21,21 @@
 				>
 			</div>
 			<div class="space-x-6">
+				{% if user.is_authenticated %}
+				<a href="#" class="text-xl font-semibold hover:text-red-500"
+					>Collections</a
+				>
 				<a
 					href="{% url 'users:account' %}"
 					class="text-xl font-semibold hover:text-red-500"
 					>Account</a
 				>
+				<a
+					href="{% url 'users:sign-out' %}"
+					class="text-xl font-semibold hover:text-red-500"
+					>Logout</a
+				>
+				{% else %}
 				<a
 					href="{% url 'users:sign-in' %}"
 					class="text-xl font-semibold hover:text-red-500"
@@ -36,11 +46,7 @@
 					class="text-xl font-semibold hover:text-red-500"
 					>Register</a
 				>
-				<a
-					href="{% url 'users:sign-out' %}"
-					class="text-xl font-semibold hover:text-red-500"
-					>Logout</a
-				>
+				{% endif %}
 			</div>
 		</nav>
 
@@ -48,7 +54,7 @@
 			class="container mx-auto min-h-[87vh] flex justify-center item-center gap-2"
 		>
 			{% block content %} {% endblock content %}{% block script %}
-			<script src="{% static 'static/main.js' %}"></script>
+			<script src="{% static 'main.js' %}"></script>
 			{% endblock script %}
 		</div>
 		<footer class="p-2 bg-blue-500 text-white sticky bottom-0">
