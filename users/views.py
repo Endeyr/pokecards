@@ -32,16 +32,15 @@ class SignUpView(View):
     Class-based view for user sign-up
     '''
     template_name = 'users/sign_up.html'
-    form_class = UserForm()
 
     def get(self, request):
-        form = self.form_class
+        form = UserForm()
         message = ''
         context = {"form": form, "message": message}
         return render(request, self.template_name, context)
 
     def post(self, request):
-        form = self.form_class(request.POST)
+        form = UserForm(request.POST)
         if form.is_valid():
             user = form.save()
             user.email = user.username

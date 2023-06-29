@@ -1,4 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth import login, logout, authenticate
+from django.views import View
+from .forms import (
+    CollectionForm,
+)
 
 
 def index(request):
@@ -14,3 +21,19 @@ def card(request, pk):
 def collection(request, pk):
     context = {}
     return render(request, 'main/collection.html', context)
+
+
+class CreateCollectionView(View):
+    template_name = 'main/create_collection.html'
+
+    def get(self, request):
+        form = CollectionForm()
+        message = ''
+        context = {'form': form, 'message': message}
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = CollectionForm()
+        message = ''
+        context = {'form': form, 'message': message}
+        return render(request, self.template_name, context)
