@@ -9,4 +9,6 @@ urlpatterns = [
     path('collection/<int:pk>', views.collection, name="collection"),
     path('collection/create', views.CreateCollectionView.as_view(),
          name="create-collection"),
+    path('collection/adv-search', views.AdvSearchView.as_view(),
+         name="adv-search"),
 ]

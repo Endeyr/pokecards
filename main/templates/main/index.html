@@ -7,11 +7,12 @@
 	</article>
 	<article class="p-2 flex gap-4 justify-center items-center">
 		<h2>Start your collection!</h2>
-		<button
+		<a
+			href="{% url 'main:create-collection' %}"
 			class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2"
 		>
 			Create Collection
-		</button>
+		</a>
 	</article>
 	<article class="text-center p-2">
 		<h2>Search for your favorite card!</h2>
@@ -58,7 +59,7 @@
 			</form>
 			<div class="m-2">
 				<a
-					href="#"
+					href="{% url 'main:adv-search' %}"
 					class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm p-2"
 				>
 					Advanced Search

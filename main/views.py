@@ -37,3 +37,17 @@ class CreateCollectionView(View):
         message = ''
         context = {'form': form, 'message': message}
         return render(request, self.template_name, context)
+
+
+class AdvSearchView(View):
+    template_name = 'main/adv_search.html'
+
+    def get(self, request):
+        message = ''
+        context = {'message': message}
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        message = ''
+        context = {'message': message}
+        return render(request, self.template_name, context)
