@@ -11,4 +11,5 @@ urlpatterns = [
          name="create-collection"),
     path('collection/adv-search', views.AdvSearchView.as_view(),
          name="adv-search"),
+    path('search-results', views.search_results, name="search-results"),
 ]

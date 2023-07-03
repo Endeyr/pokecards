@@ -1,67 +1,57 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>{% block title %}{% endblock title %} | Pokecards</title>
-		<link href="{% static 'main.css' %}" rel="stylesheet" />
-		<script src="https://cdn.tailwindcss.com"></script>
-	</head>
-	<body>
-		<nav
-			class="flex justify-between items-center p-2 bg-blue-500 text-white sticky top-0"
-		>
-			<div class="space-x-6">
-				<a
-					href="{% url 'main:index' %}"
-					class="text-xl font-semibold hover:text-red-500"
-					>Pokecards</a
-				>
-			</div>
-			<div class="space-x-6">
-				{% if user.is_authenticated %}
-				<a href="#" class="text-xl font-semibold hover:text-red-500"
-					>Collections</a
-				>
-				<a
-					href="{% url 'users:account' %}"
-					class="text-xl font-semibold hover:text-red-500"
-					>Account</a
-				>
-				<a
-					href="{% url 'users:sign-out' %}"
-					class="text-xl font-semibold hover:text-red-500"
-					>Logout</a
-				>
-				{% else %}
-				<a
-					href="{% url 'users:sign-in' %}"
-					class="text-xl font-semibold hover:text-red-500"
-					>Login</a
-				>
-				<a
-					href="{% url 'users:sign-up' %}"
-					class="text-xl font-semibold hover:text-red-500"
-					>Register</a
-				>
-				{% endif %}
-			</div>
-		</nav>
-
-		<div
-			class="container mx-auto min-h-[87vh] flex justify-center item-center gap-2"
-		>
-			{% block content %} {% endblock content %}{% block script %}
-			<script src="{% static 'main.js' %}"></script>
-			{% endblock script %}
-		</div>
-		<footer class="p-2 bg-blue-500 text-white sticky bottom-0">
-			<section class="flex justify-evenly gap-2">
-				<h2>Created by <span>Aaron Thompson</span></h2>
-				<p>Code found on <span>Github</span></p>
-			</section>
-		</footer>
-	</body>
+  <head>
+    <meta name="description"
+          content="Manage your pokemon card collection with our web app!" />
+    <meta name="keywords" content="pokemon,cards,tcg,collection" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+      {% endblock title %}
+    | Pokecards</title>
+    <link href="{% static 'main.css' %}" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <nav class="flex justify-between items-center p-2 bg-blue-500 text-white sticky top-0">
+      <div class="space-x-6">
+        <a href="{% url 'main:index' %}"
+           class="text-xl font-semibold hover:text-red-500">Pokecards</a>
+      </div>
+      <div class="space-x-6">
+        {% if user.is_authenticated %}
+          <a href="#" class="text-xl font-semibold hover:text-red-500">Collections</a>
+          <a href="{% url 'users:account' %}"
+             class="text-xl font-semibold hover:text-red-500">Account</a>
+          <a href="{% url 'users:sign-out' %}"
+             class="text-xl font-semibold hover:text-red-500">Logout</a>
+        {% else %}
+          <a href="{% url 'users:sign-in' %}"
+             class="text-xl font-semibold hover:text-red-500">Login</a>
+          <a href="{% url 'users:sign-up' %}"
+             class="text-xl font-semibold hover:text-red-500">Register</a>
+        {% endif %}
+      </div>
+    </nav>
+    <div class="container mx-auto min-h-[87vh] flex justify-center item-center gap-2">
+      {% block content %}
+      {% endblock content %}
+      {% block script %}
+        <script src="{% static 'main.js' %}"></script>
+      {% endblock script %}
+    </div>
+    <footer class="p-2 bg-blue-500 text-white sticky bottom-0">
+      <section class="flex justify-evenly gap-2">
+        <h2>
+          Created by <span>Aaron Thompson</span>
+        </h2>
+        <p>
+          Code found on <span>Github</span>
+        </p>
+      </section>
+    </footer>
+  </body>
 </html>

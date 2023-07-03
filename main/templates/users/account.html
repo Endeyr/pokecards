@@ -1,9 +1,12 @@
-{% extends 'main/base.html' %} {% block title %} Account {% endblock title %}
-{%block content %}
-<section class="">
-	<h1>Hello, {{user.first_name}}!</h1>
-	<p>Profile - This will be your additional profile details</p>
-	<p>Collections - This will loop over your collections</p>
-	<p>Cards - Number of cards you own</p>
-</section>
+{% extends "main/base.html" %}
+{% block title %}
+  Account
+{% endblock title %}
+{% block content %}
+  <section>
+    <h1>Hello, {{ user.first_name }}!</h1>
+    <p>Profile - This will be your additional profile details</p>
+    <p>Collections - This will loop over your collections</p>
+    <p>Cards - Number of cards you own</p>
+  </section>
 {% endblock content %}

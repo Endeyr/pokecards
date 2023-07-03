@@ -51,3 +51,9 @@ class AdvSearchView(View):
         message = ''
         context = {'message': message}
         return render(request, self.template_name, context)
+
+
+def search_results(request):
+    template_name = 'main/search_results.html'
+    context = {}
+    return render(request, template_name, context)
