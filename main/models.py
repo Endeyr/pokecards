@@ -2,13 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-SUPERTYPE_CHOICES = [
-    ('pokemon', 'Pokemon'),
-    ('trainer', 'Trainer'),
-    ('energy', 'Energy'),
-]
-
-TYPE_CHOICES = [
+CARD_TYPE_CHOICES = [
     ('colorless', 'Colorless'),
     ('darkness', 'Darkness'),
     ('dragon', 'Dragon'),
@@ -22,27 +16,26 @@ TYPE_CHOICES = [
     ('water', 'Water'),
 ]
 
-LEGALITY_CHOICES = [
-    ('legal', 'Legal'),
-    ('banned', 'Banned'),
-]
 
-
+# One to One, Each pokemon card has one ability
 class Abilities(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     text = models.CharField(max_length=100, null=True, blank=True)
-    type = models.CharField(max_length=100, null=True, blank=True)
+    ability_type = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return f'Ability: {self.name} - {self.text}'
+        return f'{self.name} - {self.text}'
 
 
+# One to One, Each pokemon card has one ancient trait
 class AncientTrait(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     text = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return f'Ancient Trait: {self.name}'
+        return f'{self.name}'
+
+# One to Many, Each pokemon card can have multiple attacks
 
 
 class Attacks(models.Model):
@@ -54,9 +47,10 @@ class Attacks(models.Model):
         default=0, null=True, blank=True)
 
     def __str__(self):
-        return f'Attack: {self.name}'
+        return f'{self.name}'
 
 
+# One to One, Each pokemon card has a unique price
 class CardMarket(models.Model):
     url = models.CharField(max_length=100, null=True, blank=True)
     updated_at = models.CharField(max_length=100, null=True, blank=True)
@@ -64,20 +58,34 @@ class CardMarket(models.Model):
         max_digits=10, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
-        return f'URL: {self.url}'
+        return f'{self.url}'
 
 
-class Images(models.Model):
+# One to One, Each pokemon card has a unique picture
+class CardImages(models.Model):
     small_img = models.CharField(max_length=100, null=True, blank=True)
     large_img = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.small_img}'
+
+
+# One to One, Each pokemon card set has a unique picture
+class SetImages(models.Model):
     symbol = models.CharField(max_length=100, null=True, blank=True)
     logo = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return f'Small Image: {self.small_img}'
+        return f'{self.logo}'
 
 
+# Many to Many, Many pokemon cards share many legalities
 class Legalities(models.Model):
+    LEGALITY_CHOICES = [
+        ('legal', 'Legal'),
+        ('banned', 'Banned'),
+    ]
+
     standard = models.CharField(
         max_length=100, choices=LEGALITY_CHOICES, default='legal', null=True, blank=True)
     expanded = models.CharField(
@@ -89,15 +97,17 @@ class Legalities(models.Model):
         return f'Standard: {self.standard} | Expanded: {self.expanded} | Unlimited: {self.unlimited}'
 
 
+# Many to Many, Many pokemon cards share many resistances
 class Resistances(models.Model):
-    type = models.CharField(
-        max_length=100, choices=TYPE_CHOICES,  null=True, blank=True)
+    card_type = models.CharField(
+        max_length=100, choices=CARD_TYPE_CHOICES,  null=True, blank=True)
     value = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return f'Resistance: {self.type}'
+        return f'{self.card_type}'
 
 
+# One to Many, Each pokemon card belongs to one set but each set has multiple cards
 class CardSet(models.Model):
     card_id = models.CharField(max_length=100, null=True, blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
@@ -112,12 +122,13 @@ class CardSet(models.Model):
     release_date = models.CharField(max_length=100, null=True, blank=True)
     updated_at = models.CharField(max_length=100, null=True, blank=True)
     images = models.ManyToManyField(
-        Images, blank=True, related_name='cardsets_images')
+        SetImages, blank=True, related_name='cardsets_set_images')
 
     def __str__(self):
-        return f'Set: {self.name} - Release Date: {self.release_date}'
+        return f'{self.name} - Released: {self.release_date}'
 
 
+# One to One, Each pokemon card has a unique price
 class Tcgplayer(models.Model):
     url = models.CharField(max_length=100, null=True, blank=True)
     updated_at = models.CharField(max_length=100, null=True, blank=True)
@@ -130,25 +141,32 @@ class Tcgplayer(models.Model):
         return f'Price: {self.normal_price} | Holo Price: {self.holo_price}'
 
 
+# Many to Many, Many pokemon cards share many weaknesses
 class Weaknesses(models.Model):
-    type = models.CharField(
-        max_length=100, choices=TYPE_CHOICES, null=True, blank=True)
+    card_type = models.CharField(
+        max_length=100, choices=CARD_TYPE_CHOICES, null=True, blank=True)
     value = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return f'Weakness: {self.type}'
+        return f'{self.card_type}'
 
 
+# Card Object based on Pokemon tcg api json data
 class Card(models.Model):
-    abilities = models.ManyToManyField(
-        Abilities, blank=True, related_name='cards_abilities')
+    SUPERTYPE_CHOICES = [
+        ('pokémon', 'Pokémon'),
+        ('trainer', 'Trainer'),
+        ('energy', 'Energy'),
+    ]
+    abilities = models.OneToOneField(
+        Abilities, on_delete=models.CASCADE)
     artist = models.CharField(max_length=100, null=True, blank=True)
-    ancient_trait = models.ManyToManyField(
-        AncientTrait, blank=True, related_name='cards_ancient_trait')
-    attacks = models.ManyToManyField(
-        Attacks, blank=True, related_name='cards_attacks')
-    cardmarket = models.ManyToManyField(
-        CardMarket, blank=True, related_name='cards_cardmarket')
+    ancient_trait = models.OneToOneField(
+        AncientTrait, on_delete=models.CASCADE)
+    attacks = models.ForeignKey(
+        Attacks, null=True, blank=True, on_delete=models.SET_NULL)
+    cardmarket = models.OneToOneField(
+        CardMarket, on_delete=models.CASCADE)
     converted_retreat_cost = models.IntegerField(
         default=0, null=True, blank=True)
     evolves_from = models.CharField(max_length=100, null=True, blank=True)
@@ -156,8 +174,8 @@ class Card(models.Model):
     flavor_text = models.CharField(max_length=100, null=True, blank=True)
     hp = models.CharField(max_length=100, null=True, blank=True)
     card_id = models.CharField(max_length=100, null=True, blank=True)
-    images = models.ManyToManyField(
-        Images, blank=True, related_name='cards_images')
+    images = models.OneToOneField(
+        CardImages, on_delete=models.CASCADE)
     legalities = models.ManyToManyField(
         Legalities, blank=True, related_name='cards_legalities')
     level = models.CharField(max_length=100, null=True, blank=True)
@@ -171,13 +189,13 @@ class Card(models.Model):
         Resistances, blank=True, related_name='cards_resistances')
     retreat_cost = models.JSONField(default=list, null=True, blank=True)
     rules = models.JSONField(default=list, null=True, blank=True)
-    card_set = models.ManyToManyField(
-        CardSet, blank=True, related_name='cards_card_set')
+    card_set = models.ForeignKey(
+        CardSet, null=True, blank=True, on_delete=models.CASCADE)
     subtypes = models.JSONField(default=list, null=True, blank=True)
     supertype = models.CharField(
         max_length=100, choices=SUPERTYPE_CHOICES, null=True, blank=True)
-    tcgplayer = models.ManyToManyField(
-        Tcgplayer, blank=True, related_name='cards_tcgplayer')
+    tcgplayer = models.OneToOneField(
+        Tcgplayer, on_delete=models.CASCADE)
     types = models.JSONField(default=list, null=True, blank=True)
     weaknesses = models.ManyToManyField(
         Weaknesses, blank=True, related_name='cards_weaknesses')
@@ -185,9 +203,10 @@ class Card(models.Model):
     in_collection = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Name: {self.name}'
+        return f'{self.name}'
 
 
+# Many to Many, each collection can have multiple cards and each card can be in multiple collections
 class Collection(models.Model):
     title = models.CharField(max_length=256, null=True, blank=True)
     description = models.CharField(max_length=256, blank=True, null=True)
@@ -199,4 +218,4 @@ class Collection(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'Title: {self.title}'
+        return f'{self.title}'
