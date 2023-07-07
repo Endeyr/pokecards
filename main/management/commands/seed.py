@@ -1,164 +1,135 @@
-from pokemontcgsdk import Card as getCard, RestClient
+from pokemontcgsdk import Card as getCard, RestClient, Set as getSet
 from django.core.management.base import BaseCommand
 from ...models import *
 from my_secrets import secrets
+from datetime import datetime
+from django.utils import timezone
 
 API_KEY = secrets.API_KEY
 
 RestClient.configure(API_KEY)
 
 
-# TODO
+def format_date(date_string):
+    date = datetime.strptime(date_string, "%Y/%m/%d")
+    formatted_date = date.strftime("%Y-%m-%d")
+    return formatted_date
 
-# Fix format on some of the db fields
-# Fix attack, abilities, ancient trait,
+
+def format_datetime(datetime_string):
+    datetime_obj = datetime.strptime(datetime_string, "%Y/%m/%d %H:%M:%S")
+    formatted_datetime = datetime_obj.strftime("%Y-%m-%d %H:%M:%S+00:00")
+    return formatted_datetime
+
+
+def seed_sets():
+    sets_data = getSet.all()
+    for data in sets_data:
+        set_obj = Set(
+            id=data.id,
+            name=data.name if hasattr(
+                data, "name") else "",
+            series=data.series if hasattr(
+                data, "series") else "",
+            printed_total=data.printedTotal if hasattr(
+                data, "printedTotal") else 0,
+            total=data.total if hasattr(
+                data, "total") else 0,
+            unlimited_legality=data.legalities.unlimited if hasattr(
+                data.legalities, "unlimited") else "",
+            standard_legality=data.legalities.standard if hasattr(
+                data.legalities, "standard") else "",
+            expanded_legality=data.legalities.expanded if hasattr(
+                data.legalities, "expanded") else "",
+            ptcgo_code=data.ptcgoCode if hasattr(
+                data, "ptcgoCode") else "",
+            release_date=format_date(data.releaseDate) if hasattr(
+                data, "releaseDate") else "1900-01-01",
+            updated_at=format_datetime(data.updatedAt) if hasattr(
+                data, "updatedAt") else "1900-01-01 00:00:00+00:00",
+            symbol=data.images.symbol if hasattr(
+                data.images, "symbol") else "",
+            logo=data.images.logo if hasattr(
+                data.images, "logo") else "",
+        )
+        set_obj.save()
+
 
 def seed_cards():
-    # cards = getCard.all()
-    cards = getCard.where(page=1, pageSize=2)
+    cards_data = getCard.all()
     # Iterate over the cards and create corresponding model instances
-    for card in cards:
-        card_obj = Card()
-        # Create or get Abilities instance
-        abilities_data = card.abilities
-        try:
-            abilities = Abilities.objects.get(
-                name=abilities_data.name,
-                text=abilities_data.text,
-                ability_type=abilities_data.type,
-            )
-        except AttributeError:
-            abilities = Abilities.objects.create(
-                name="",
-                text="",
-                ability_type="",
-            )
-
-        # Create or get AncientTrait instance
-        ancient_trait_data = card.ancientTrait
-        try:
-            ancient_trait = AncientTrait.objects.get(
-                name=ancient_trait_data.name,
-                text=ancient_trait_data.text,
-            )
-        except AttributeError:
-            ancient_trait = AncientTrait.objects.create(
-                name="",
-                text="",
-            )
-
-        # Create or get Attacks instance
-        attacks_data = card.attacks
-        for data in attacks_data:
-            attack, _ = Attacks.objects.get_or_create(
-                name=data.name if hasattr(data, "name") else "",
-                cost=data.cost if hasattr(data, "cost") else [],
-                text=data.text if hasattr(data, "text") else "",
-                damage=data.damage if hasattr(data, "damage") else "",
-                converted_energy_cost=data.convertedEnergyCost if hasattr(
-                    data, "convertedEnergyCost") else 0,
-            )
-            attack.card = card_obj
-            attack.save()
-
-        # Create or get CardMarket instance
-        cardmarket_data = card.cardmarket
-        cardmarket, _ = CardMarket.objects.get_or_create(
-            url=cardmarket_data.url,
-            updated_at=cardmarket_data.updatedAt,
-            prices=cardmarket_data.prices.averageSellPrice,
+    for card in cards_data:
+        set_id = card.set.id
+        set_obj = Set.objects.get(id=set_id) if set_id else ""
+        card_obj = Card(
+            id=card.id,
+            name=card.name if hasattr(
+                card, "name") else "",
+            supertype=card.supertype if hasattr(
+                card, "supertype") else "",
+            subtypes=card.subtypes if hasattr(
+                card, "subtypes") else [],
+            hp=card.hp if hasattr(
+                card, "hp") else "",
+            types=card.types if hasattr(
+                card, "types") else [],
+            evolves_from=card.evolvesFrom if hasattr(
+                card, "evolvesFrom") else "",
+            evolves_to=card.evolvesTo if hasattr(card, "evolvesTo") else "",
+            rules=card.rules if hasattr(
+                card, "rules") else "",
+            ancient_trait_name=card.ancientTrait.name if hasattr(
+                card.ancientTrait, "name") else "",
+            ancient_trait_text=card.ancientTrait.text if hasattr(
+                card.ancientTrait, "text") else "",
+            abilities=card.abilities if hasattr(
+                card, "abilities") else [],
+            attacks=card.attacks if hasattr(
+                card, "attacks") else [],
+            weaknesses=card.weaknesses if hasattr(
+                card, "weaknesses") else [],
+            resistances=card.resistances if hasattr(
+                card, "resistances") else [],
+            retreat_cost=card.retreatCost if hasattr(
+                card, "retreatCost") else [],
+            converted_retreat_cost=card.convertedRetreatCost if hasattr(
+                card, "convertedRetreatCost") else 0,
+            card_set=set_obj,
+            number=card.number if hasattr(
+                card, "number") else "",
+            artist=card.artist if hasattr(
+                card, "artist") else "",
+            rarity=card.rarity if hasattr(
+                card, "rarity") else "",
+            flavor_text=card.flavorText if hasattr(
+                card, "flavorText") else "",
+            national_pokedex_numbers=card.nationalPokedexNumbers if hasattr(
+                card, "nationalPokedexNumber") else "",
+            unlimited_legality=card.legalities.unlimited if hasattr(
+                card.legalities, "unlimited") else "",
+            standard_legality=card.legalities.standard if hasattr(
+                card.legalities, "standard") else "",
+            expanded_legality=card.legalities.expanded if hasattr(
+                card.legalities, "expanded") else "",
+            regulation_mark=card.regulationMark if hasattr(
+                card, "regulationMark") else "",
+            small_image=card.images.small if hasattr(
+                card.images, "small") else "",
+            large_image=card.images.large if hasattr(
+                card.images, "large") else "",
+            tcgplayer_url=card.tcgplayer.url if hasattr(
+                card.tcgplayer, "url") else "",
+            tcgplayer_updated_at=format_date(card.tcgplayer.updatedAt) if hasattr(
+                card.tcgplayer, "updated_at") else "1900-01-01",
+            tcgplayer_prices=card.tcgplayer.prices if hasattr(
+                card.tcgplayer, "prices") else 0,
+            cardmarket_url=card.cardmarket.url if hasattr(
+                card.cardmarket, "url") else "",
+            cardmarket_updated_at=format_date(card.cardmarket.updatedAt) if hasattr(
+                card.cardmarket, "updated_at") else "1900-01-01",
+            cardmarket_prices=card.cardmarket.prices if hasattr(
+                card.cardmarket, "prices") else 0,
         )
-
-        # Create or get CardImages instance
-        card_images_data = card.images
-        card_images, _ = CardImages.objects.get_or_create(
-            small_img=card_images_data.small,
-            large_img=card_images_data.large,
-        )
-
-        # Create or get Legalities instance
-        legalities_data = card.legalities
-        legalities, _ = Legalities.objects.get_or_create(
-            standard=legalities_data.standard,
-            expanded=legalities_data.expanded,
-            unlimited=legalities_data.unlimited,
-        )
-
-        # Create or get Resistances instances
-        resistances_data = card.resistances
-        resistance, _ = Resistances.objects.get_or_create(
-            card_type=resistances_data.type if hasattr(
-                resistances_data, "type") else "",
-            value=resistances_data.value if hasattr(
-                resistances_data, "value") else "",
-        )
-
-        # Create or get Weaknesses instances
-        weaknesses_data = card.weaknesses[0]
-        weakness, _ = Weaknesses.objects.get_or_create(
-            card_type=weaknesses_data.type,
-            value=weaknesses_data.value
-        )
-
-        # Create or get CardSet instance
-        card_set_data = card.set
-        try:
-            card_set = CardSet.objects.get(card_id=card_set_data.id)
-        except CardSet.DoesNotExist:
-            card_set = CardSet.objects.create(
-                card_id=card_set_data.id,
-                name=card_set_data.name,
-                series=card_set_data.series,
-                printed_total=card_set_data.printedTotal,
-                total=card_set_data.total,
-                ptcgo_code=card_set_data.ptcgoCode,
-                release_date=card_set_data.releaseDate,
-                updated_at=card_set_data.updatedAt
-            )
-
-        # Create or get Tcgplayer instance
-        tcgplayer_data = card.tcgplayer
-        tcgplayer, _ = Tcgplayer.objects.get_or_create(
-            url=tcgplayer_data.url,
-            updated_at=tcgplayer_data.updatedAt,
-            normal_price=tcgplayer_data.prices.normal.market if hasattr(
-                tcgplayer_data, "TCGPrices") else 0,
-            holo_price=tcgplayer_data.prices.reverseHolofoil.market
-        )
-
-        # Create or get Card instance
-        card_obj, _ = Card.objects.get_or_create(
-            abilities=abilities,
-            artist=card.artist,
-            ancient_trait=ancient_trait,
-            evolves_from=card.evolvesFrom,
-            evolves_to=card.evolvesTo if hasattr(
-                card, "evolvedTo") else [],
-            flavor_text=card.flavorText,
-            hp=card.hp,
-            card_id=card.id,
-            images=card_images,
-            level=card.level if hasattr(card, "level") else "",
-            regulation_mark=card.regulationMark,
-            name=card.name,
-            national_pokedex_numbers=card.nationalPokedexNumbers,
-            number=card.number,
-            rarity=card.rarity,
-            retreat_cost=card.retreatCost,
-            rules=card.rules,
-            card_set=card_set,
-            subtypes=card.subtypes,
-            supertype=card.supertype,
-            tcgplayer=tcgplayer,
-            cardmarket=cardmarket,
-            types=card.types,
-            in_collection=False
-        )
-
-        # Add ManyToMany relations
-        card_obj.legalities.add(legalities)
-        card_obj.resistances.add(resistance)
-        card_obj.weaknesses.add(weakness)
         card_obj.save()
 
 
@@ -169,5 +140,6 @@ def clear_data():
 class Command(BaseCommand):
     def handle(self, *args, **options):
         clear_data()
+        seed_sets()
         seed_cards()
         print("seeded successfully")
