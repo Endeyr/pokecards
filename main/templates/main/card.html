@@ -7,38 +7,40 @@
     <div class="flex md:hidden justify-center items-center ">
       <img height="max-h-fit"
            width="auto"
+           class="m-1 p-0.25"
            src="{{ card.small_image }}"
            alt="{{ card.name }}" />
     </div>
     <div class="hidden md:inline md:basis-1/4 md:justify-center md:items-center">
       <img height="auto"
            width="auto"
+           class="m-1 p-0.25"
            src="{{ card.large_image }}"
            alt="{{ card.name }}" />
     </div>
     <div class="md:basis-3/4 flex flex-col md:grid m-1 p-0.5">
       <div class="md:flex md:gap-2 md:justify-between m-1 p-0.5">
-        <p>
+        <p class="m-1">
           <span class="font-bold">Name:</span> {{ card.name }}
         </p>
-        <p>
+        <p class="m-1">
           <span class="font-bold">Subtype:</span> {{ subtypes }}
         </p>
-        <p>
+        <p class="m-1">
           <span class="font-bold">HP:</span> {{ card.hp }}
         </p>
-        <p>
+        <p class="m-1">
           <span class="font-bold">Type:</span> {{ types }}
         </p>
         {% for price in price_details %}
-          <p>
+          <p class="m-1">
             <span class="font-bold">Price:</span> ${{ price.market }}
           </p>
         {% endfor %}
       </div>
       <hr>
       <div class="md:flex md:gap-4 md:justify-start m-1 p-0.5">
-        <div>
+        <div class="m-1">
           {% for ability in abilities %}
             <h3>
               <span class="font-bold">Ability:</span> {{ ability.name }}
@@ -46,7 +48,7 @@
             <p>{{ ability.text }}</p>
           {% endfor %}
         </div>
-        <div>
+        <div class="m-1">
           {% for attack in attack_details %}
             <h3>
               <span class="font-bold">Attack:</span> {{ attack.name }}
@@ -64,34 +66,34 @@
       <hr>
       <div class="md:grid md:columns-4 md:gap-4 m-1 p-0.5">
         {% if card.rules != None %}
-          <p>
+          <p class="m-1">
             <span class="font-bold">Rules:</span> {{ card.rules }}
           </p>
         {% endif %}
-        <p>
+        <p class="m-1">
           <span class="font-bold">Weaknesses:</span> {{ weaknesses }}
         </p>
-        <p>
+        <p class="m-1">
           <span class="font-bold">Resistances:</span> {{ resistances }}
         </p>
-        <p>
+        <p class="m-1">
           <span class="font-bold">Retreat Cost:</span> {{ retreat_cost }}
         </p>
-        <p>
+        <p class="m-1">
           <span class="font-bold">Artist:</span> {{ card.artist }}
         </p>
-        <p>
+        <p class="m-1">
           <span class="font-bold">Rarity:</span> {{ card.rarity }}
         </p>
-        <p>
+        <p class="m-1">
           <span class="font-bold">Set:</span> {{ card.card_set }}
         </p>
-        <p>
+        <p class="m-1">
           <span class="font-bold">Number:</span> {{ card.number }}
         </p>
-        <div class="col-start-2">
+        <div class="col-start-2 m-1">
           {% if card.in_collection %}
-            <button class="text-white p-2 m-1 rounded-full bg-secondary">Remove from Collection</button>
+            <button class="text-white p-2 m-1 rounded-full bg-danger">Remove from Collection</button>
           {% else %}
             <button class="text-white p-2 m-1 rounded-full bg-secondary">Add to Collection</button>
           {% endif %}

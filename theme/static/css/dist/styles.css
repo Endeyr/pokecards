@@ -887,6 +887,11 @@ select {
   background-color: rgb(59 76 202 / var(--tw-bg-opacity));
 }
 
+.bg-danger {
+  --tw-bg-opacity: 1;
+  background-color: rgb(204 0 0 / var(--tw-bg-opacity));
+}
+
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
