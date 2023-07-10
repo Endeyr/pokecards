@@ -3,16 +3,14 @@
   Advanced Search
 {% endblock title %}
 {% block content %}
-  <section class="flex flex-col justify-center items-center gap-2">
-    {% if message %}<p class="text-red-500 bg-gray-100">{{ message }}</p>{% endif %}
-    {% if form.errors %}<p class="text-red-500 bg-gray-100">{{ form.errors }}</p>{% endif %}
+  <section>
+    {% if message %}<p>{{ message }}</p>{% endif %}
+    {% if form.errors %}<p>{{ form.errors }}</p>{% endif %}
     <form action="{% url 'main:adv-search' %}" method="post">
       {% csrf_token %}
-      <div class="m-2 p-2 flex flex-col gap-2">{{ form.as_p }}</div>
-      <div class="flex justify-center">
-        <button type="submit"
-                class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm p-2 min-w-[90%]"
-                value="Adv-search">Submit</button>
+      <div>{{ form.as_p }}</div>
+      <div>
+        <button type="submit"  value="Adv-search">Submit</button>
       </div>
     </form>
   </section>

@@ -4,68 +4,79 @@
 {% endblock title %}
 {% block content %}
   <section>
-    <div class="flex flex-row justify-between items-center gap-16">
-      <div class="mt-8">
+    <div>
+      <div>
         <img height="auto"
              width="auto"
-             class="box-border h-96"
-             src="https://images.pokemontcg.io/sv2/5_hires.png"
-             alt="name" />
+             src="{{ card.large_image }}"
+             alt="{{ card.name }}" />
       </div>
-      <div class="flex flex-col mt-2">
-        <div class="flex flex-row gap-2">
-          <p>Name</p>
-          <p>Subtypes</p>
-          <p>HP</p>
-          <p>Types</p>
+      <div>
+        <div>
+          <p>{{ card.name }}</p>
+          <p>{{ subtypes }}</p>
+          <p>{{ card.hp }}</p>
+          <p>{{ types }}</p>
         </div>
-        <div class="flex flex-row gap-2">
-          <p>Price</p>
+        <div>
+          {% for price in price_details %}
+            <p>Price</p>
+            <p>${{ price.market }}</p>
+          {% endfor %}
         </div>
-        <div class="flex flex-row gap-2">
-          <p>Abilities</p>
-          <p>Info</p>
+        <div>
+          {% for ability in abilities %}
+            <p>Ability</p>
+            <h3>{{ ability.name }}</h3>
+            <p>{{ ability.text }}</p>
+          {% endfor %}
         </div>
-        <div class="flex flex-row gap-2">
-          <p>Attacks</p>
-          <p>Info</p>
+        <div>
+          {% for attack in attack_details %}
+            <p>Attack</p>
+            <h3>{{ attack.name }}</h3>
+            <p>{{ attack.cost }}</p>
+            <p>{{ attack.convertedEnergyCost }}</p>
+            <p>{{ attack.damage }}</p>
+            <p>{{ attack.text }}</p>
+          {% endfor %}
         </div>
-        <div class="flex flex-row gap-2">
+        <div>
           <p>Rules</p>
-          <p>Info</p>
+          <p>{{ card.rules }}</p>
         </div>
         <div class="grid-cols-3">
-          <div class="flex flex-row gap-2">
-            <p>Weakness</p>
-            <p>info</p>
+          <div>
+            <p>Weaknesses</p>
+            <p>{{ weaknesses }}</p>
           </div>
-          <div class="flex flex-row gap-2">
-            <p>Resistance</p>
-            <p>info</p>
+          <div>
+            <p>Resistances</p>
+            <p>{{ resistances }}</p>
           </div>
-          <div class="flex flex-row gap-2">
+          <div>
             <p>Retreat Cost</p>
-            <p>info</p>
+            <p>{{ retreat_cost }}</p>
           </div>
-          <div class="flex flex-row gap-2">
+          <div>
             <p>Artist</p>
-            <p>info</p>
+            <p>{{ card.artist }}</p>
           </div>
-          <div class="flex flex-row gap-2">
+          <div>
             <p>Rarity</p>
-            <p>info</p>
+            <p>{{ card.rarity }}</p>
           </div>
-          <div class="flex flex-row gap-2">
+          <div>
             <p>Set</p>
-            <p>info</p>
+            <p>{{ card.card_set }}</p>
           </div>
-          <div class="flex flex-row gap-2">
+          <div>
             <p>Number</p>
-            <p>info</p>
+            <p>{{ card.number }}</p>
           </div>
-          <div class="flex flex-row gap-2">
+          <div>
             <p>In Collection</p>
-            <p>checkbox</p>
+            <p>{{ card.in_collection }}</p>
           </div>
         </div>
       </div>
