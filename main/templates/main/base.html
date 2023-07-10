@@ -1,4 +1,4 @@
-{% load static %}
+{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
   <head>
@@ -12,11 +12,10 @@
       {% block title %}
       {% endblock title %}
     | Pokecards</title>
-    <link href="{% static 'main.css' %}" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    {% tailwind_css %}
   </head>
-  <body>
-    <nav class="sticky top-0">
+  <body class="bg-primary">
+    <nav class="sticky top-0 ">
       <div>
         <a href="{% url 'main:index' %}">Pokecards</a>
       </div>

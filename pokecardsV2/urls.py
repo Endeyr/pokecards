@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path("__reload__/", include("django_browser_reload.urls")),
     path('', include('main.urls', namespace="main")),
     path('', include('users.urls', namespace="users")),
     path('admin/', admin.site.urls),
