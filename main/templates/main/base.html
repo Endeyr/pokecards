@@ -14,14 +14,14 @@
     | Pokecards</title>
     {% tailwind_css %}
   </head>
-  <body class="bg-primary">
-    <nav class="sticky top-0 ">
+  <body class="md:bg-gradient-to-r from-primary to-white bg-primary font-sans min-h-screen flex flex-col justify-between">
+    <nav class="top-0 shadow-lg text-secondary text-lg font-semibold md:flex justify-between p-0.5 m-1 md:visible hidden">
       <div>
         <a href="{% url 'main:index' %}">Pokecards</a>
       </div>
-      <div>
+      <div class="flex gap-3">
         {% if user.is_authenticated %}
-          <a href="#">Collections</a>
+          <a href="{% url 'main:collection' pk=1 %}">Collections</a>
           <a href="{% url 'users:account' %}">Account</a>
           <a href="{% url 'users:sign-out' %}">Logout</a>
         {% else %}
@@ -30,20 +30,26 @@
         {% endif %}
       </div>
     </nav>
-    <div>
+    <nav class="top-0 shadow-lg text-secondary text-lg font-semibold flex justify-between p-0.5 m-1 md:hidden visible">
+      <div>
+        <a href="#">mobile nav</a>
+      </div>
+    </nav>
+    <div class="grow w-full">
       {% block content %}
       {% endblock content %}
       {% block script %}
         <script src="{% static 'main.js' %}"></script>
       {% endblock script %}
     </div>
-    <footer class="sticky bottom-0">
-      <section>
+    <footer class="bottom-0 shadow-inner md:visible invisible">
+      <section class="flex justify-evenly p-0.5 m-1">
         <h2>
           Created by <span>Aaron Thompson</span>
         </h2>
         <p>
-          Code found on <a href="https://github.com/Endeyr/pokecards"
+          Code found on <a class="text-secondary"
+    href="https://github.com/Endeyr/pokecards"
     target="_blank"
     rel="noopener noreferrer">Github</a>
         </p>

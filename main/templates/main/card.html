@@ -3,81 +3,98 @@
   Card
 {% endblock title %}
 {% block content %}
-  <section>
-    <div>
-      <div>
-        <img height="auto"
-             width="auto"
-             src="{{ card.large_image }}"
-             alt="{{ card.name }}" />
+  <section class="flex md:flex-row flex-col mt-4 p-2">
+    <div class="flex md:hidden justify-center items-center ">
+      <img height="max-h-fit"
+           width="auto"
+           src="{{ card.small_image }}"
+           alt="{{ card.name }}" />
+    </div>
+    <div class="hidden md:inline md:basis-1/4 md:justify-center md:items-center">
+      <img height="auto"
+           width="auto"
+           src="{{ card.large_image }}"
+           alt="{{ card.name }}" />
+    </div>
+    <div class="md:basis-3/4 flex flex-col md:grid m-1 p-0.5">
+      <div class="md:flex md:gap-2 md:justify-between m-1 p-0.5">
+        <p>
+          <span class="font-bold">Name:</span> {{ card.name }}
+        </p>
+        <p>
+          <span class="font-bold">Subtype:</span> {{ subtypes }}
+        </p>
+        <p>
+          <span class="font-bold">HP:</span> {{ card.hp }}
+        </p>
+        <p>
+          <span class="font-bold">Type:</span> {{ types }}
+        </p>
+        {% for price in price_details %}
+          <p>
+            <span class="font-bold">Price:</span> ${{ price.market }}
+          </p>
+        {% endfor %}
       </div>
-      <div>
-        <div>
-          <p>{{ card.name }}</p>
-          <p>{{ subtypes }}</p>
-          <p>{{ card.hp }}</p>
-          <p>{{ types }}</p>
-        </div>
-        <div>
-          {% for price in price_details %}
-            <p>Price</p>
-            <p>${{ price.market }}</p>
-          {% endfor %}
-        </div>
+      <hr>
+      <div class="md:flex md:gap-4 md:justify-start m-1 p-0.5">
         <div>
           {% for ability in abilities %}
-            <p>Ability</p>
-            <h3>{{ ability.name }}</h3>
+            <h3>
+              <span class="font-bold">Ability:</span> {{ ability.name }}
+            </h3>
             <p>{{ ability.text }}</p>
           {% endfor %}
         </div>
         <div>
           {% for attack in attack_details %}
-            <p>Attack</p>
-            <h3>{{ attack.name }}</h3>
-            <p>{{ attack.cost }}</p>
-            <p>{{ attack.convertedEnergyCost }}</p>
-            <p>{{ attack.damage }}</p>
+            <h3>
+              <span class="font-bold">Attack:</span> {{ attack.name }}
+            </h3>
+            <p>{{ attack.cost }} | {{ attack.convertedEnergyCost }}</p>
+            {% if attack.damage %}
+              <p>
+                <span class="font-bold">Damage:</span> {{ attack.damage }}
+              </p>
+            {% endif %}
             <p>{{ attack.text }}</p>
           {% endfor %}
         </div>
-        <div>
-          <p>Rules</p>
-          <p>{{ card.rules }}</p>
-        </div>
-        <div class="grid-cols-3">
-          <div>
-            <p>Weaknesses</p>
-            <p>{{ weaknesses }}</p>
-          </div>
-          <div>
-            <p>Resistances</p>
-            <p>{{ resistances }}</p>
-          </div>
-          <div>
-            <p>Retreat Cost</p>
-            <p>{{ retreat_cost }}</p>
-          </div>
-          <div>
-            <p>Artist</p>
-            <p>{{ card.artist }}</p>
-          </div>
-          <div>
-            <p>Rarity</p>
-            <p>{{ card.rarity }}</p>
-          </div>
-          <div>
-            <p>Set</p>
-            <p>{{ card.card_set }}</p>
-          </div>
-          <div>
-            <p>Number</p>
-            <p>{{ card.number }}</p>
-          </div>
-          <div>
-            <p>In Collection</p>
-            <p>{{ card.in_collection }}</p>
-          </div>
+      </div>
+      <hr>
+      <div class="md:grid md:columns-4 md:gap-4 m-1 p-0.5">
+        {% if card.rules != None %}
+          <p>
+            <span class="font-bold">Rules:</span> {{ card.rules }}
+          </p>
+        {% endif %}
+        <p>
+          <span class="font-bold">Weaknesses:</span> {{ weaknesses }}
+        </p>
+        <p>
+          <span class="font-bold">Resistances:</span> {{ resistances }}
+        </p>
+        <p>
+          <span class="font-bold">Retreat Cost:</span> {{ retreat_cost }}
+        </p>
+        <p>
+          <span class="font-bold">Artist:</span> {{ card.artist }}
+        </p>
+        <p>
+          <span class="font-bold">Rarity:</span> {{ card.rarity }}
+        </p>
+        <p>
+          <span class="font-bold">Set:</span> {{ card.card_set }}
+        </p>
+        <p>
+          <span class="font-bold">Number:</span> {{ card.number }}
+        </p>
+        <div class="col-start-2">
+          {% if card.in_collection %}
+            <button class="text-white p-2 m-1 rounded-full bg-secondary">Remove from Collection</button>
+          {% else %}
+            <button class="text-white p-2 m-1 rounded-full bg-secondary">Add to Collection</button>
+          {% endif %}
         </div>
       </div>
     </div>
