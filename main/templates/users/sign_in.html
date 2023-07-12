@@ -3,9 +3,11 @@
   Sign In
 {% endblock title %}
 {% block content %}
-  <section>
-    {% if message %}<p>{{ message }}</p>{% endif %}
-    <form action="{% url 'users:sign-in' %}" method="post">
+  <section class="h-[80vh] flex flex-col justify-center items-center gap-3">
+    {% if message %}<p class="bg-danger w-1/4 text-center font-extrabold">{{ message }}</p>{% endif %}
+    <form action="{% url 'users:sign-in' %}"
+          method="post"
+          class="flex flex-col justify-center items-end gap-1">
       {% csrf_token %}
       <p>
         <label for="id_username">Username:</label>
@@ -13,6 +15,7 @@
                type="text"
                name="username"
                placeholder="Username"
+               class="rounded-lg"
                maxlength="150"
                id="id_username"
                required />
@@ -22,16 +25,20 @@
         <input type="password"
                name="password"
                placeholder="Password..."
+               class="rounded-lg"
                required
                id="id_password" />
       </p>
       <div>
-        <button type="submit"  value="Sign-in">Submit</button>
+        <button type="submit"
+                value="Sign-in"
+                class=" text-white p-2 m-1 rounded-full bg-secondary">Submit</button>
       </div>
     </form>
     <p>
       Need have an account?
-      <a href="{% url 'users:sign-up' %}">Sign Up here.</a>
+      <a href="{% url 'users:sign-up' %}"
+         class=" text-white p-2 m-1 rounded-full bg-secondary">Sign Up here.</a>
     </p>
   </section>
 {% endblock content %}

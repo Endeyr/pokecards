@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.views import View
-import json
 
 from .forms import (
     CollectionForm,
@@ -131,12 +131,13 @@ def card(request, pk):
     return render(request, 'main/card.html', context)
 
 
-def collection(request, pk):
+@login_required
+def collection(request):
     context = {}
     return render(request, 'main/collection.html', context)
 
 
-class CreateCollectionView(View):
+class CreateCollectionView(LoginRequiredMixin, View):
     template_name = 'main/create_collection.html'
 
     def get(self, request):

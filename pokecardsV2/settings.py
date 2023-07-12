@@ -123,6 +123,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Handle Login Redirect
+LOGIN_URL = "users:sign-in"
+LOGIN_REDIRECT_URL = "users:account"
+LOGOUT_REDIRECT_URL = "users:sign-out"
+
 # DateTime Field Exception Support
 warnings.filterwarnings(
     "error",

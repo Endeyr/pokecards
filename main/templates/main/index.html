@@ -1,33 +1,59 @@
 {% extends "main/base.html" %}
+{% load static %}
 {% block title %}
   Home
 {% endblock title %}
 {% block content %}
   <section>
-    <article>
-      <h1>Welcome to Pokecards! -</h1>
-      <p>A webapp where you can manage your Pokemon Trading Card collection.</p>
+    <article class="h-[80vh] flex flex-col justify-center items-center gap-3">
+      <img width="auto"
+           height="auto"
+           src="{% static 'images/pikachu.png' %}"
+           alt="pikachu"
+           class="m-1 p-0.25 h-64" />
+      <div class="flex flex-col justify-center items-center gap-2">
+        <h1 class="text-2xl">Welcome to Pokécards!</h1>
+        <p class="text-2xl">A webapp to manage your PokémonTCG collection.</p>
+      </div>
     </article>
-    <article>
-      <h2>Start your collection!</h2>
-      <a href="{% url 'main:create-collection' %}">Create Collection</a>
-    </article>
-    <article>
-      <h2>Search for your favorite card!</h2>
+    <article class="h-screen flex justify-evenly items-center gap-3">
       <div>
-        <form>
-          <label for="default-search">Search</label>
+        <img width="auto"
+             height="auto"
+             src="{% static 'images/pokeball.png' %}"
+             alt="pokeball"
+             class="m-1 p-0.25 h-64" />
+      </div>
+      <div class="flex flex-col justify-center items-center gap-2">
+        <h2>Start your collection!</h2>
+        <a href="{% url 'main:create-collection' %}"
+           class="text-white p-2 m-1 rounded-full bg-secondary">Create Collection</a>
+      </div>
+    </article>
+    <article class="h-screen flex justify-evenly items-center gap-3">
+      <div class="flex flex-col justify-center items-center gap-2">
+        <form class="flex flex-col justify-center items-center gap-2">
+          <label for="card-search">Search for your favorite card!</label>
           <div>
             <input type="search"
-                   id="default-search"
+                   id="card-search"
+                   class="rounded-lg"
                    placeholder="Search Cards, Sets..."
                    required />
-            <button type="submit">Search</button>
+            <button class=" text-white p-2 m-1 rounded-full bg-secondary" type="submit">Search</button>
           </div>
         </form>
         <div>
-          <a href="{% url 'main:adv-search' %}">Advanced Search</a>
+          <a href="{% url 'main:adv-search' %}"
+             class=" text-white p-2 m-1 rounded-full bg-secondary">Advanced Search</a>
         </div>
+      </div>
+      <div>
+        <img width="auto"
+             height="auto"
+             src="{% static 'images/legendary.png' -%}"
+             alt="legendaries"
+             class="m-1 p-0.25 h-64" />
       </div>
     </article>
   </section>

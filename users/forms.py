@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django import forms
 
 
-INPUT_CLASSES = "min-w-full text-sm font-medium text-gray-900"
+INPUT_CLASSES = "rounded-lg"
 
 
 class UserForm(UserCreationForm):
