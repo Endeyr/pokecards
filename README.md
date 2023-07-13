@@ -15,61 +15,81 @@ The Pokémon Trading Card Collection Builder is a web application built with Dja
 
 1. Clone the repository:
 
-   ```
-   git clone https://github.com/your-username/your-repo.git
+```
+git clone https://github.com/Endeyr/pokecards.git
 
-   ```
+```
 
 2. Change into the project directory:
 
-   ```
-   cd your-repo
-   ```
+```
+cd pokecards
+```
 
 3. Create a virtual environment:
 
-   ```
-   python -m venv env
-   ```
+```
+Install python3 and python3 venv if you haven't already
+python3 -m venv env
+```
 
 4. Activate the virtual environment:
 
-   ```
-   source env/bin/activate
-   ```
+```
+source env/bin/activate
+```
 
 5. Install the required dependencies:
 
-   ```
-   pip install -r requirements.txt
-   ```
+```
+pip install -r requirements.txt
+```
 
-6. Set up the database:
+6. Set up secrets:
 
-   ```
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
+```
+Follow this guide https://github.com/kakulukia/django-secrets
+```
 
-7. Setup tailwind
+7. Add api key:
 
-   ```
-   python manage.py tailwind install
-   ```
+```
+Sign up at https://dev.pokemontcg.io/
+Add api key to secrets.py created in step 6
+```
 
-8. Run tailwind
+8. Set up the database:
 
-   ```
-   python manage.py tailwind start
-   ```
+```
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
 
-9. Run the development server:
+9. Seed the database:
 
-   ```
-   python manage.py runserver
-   ```
+```
+python3 manage.py seed
+```
 
-10. Access the application by visiting http://localhost:8000 in your web browser.
+10. Setup tailwind:
+
+```
+python3 manage.py tailwind install
+```
+
+10. Run tailwind:
+
+```
+python3 manage.py tailwind start
+```
+
+10. Run the development server:
+
+```
+python3 manage.py runserver
+```
+
+11. Access the application by visiting http://localhost:8000 in your web browser.
 
 ## Usage
 
