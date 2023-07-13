@@ -3,46 +3,114 @@
   Search Results
 {% endblock title %}
 {% block content %}
-  <section>
-    <p>Collection - Can change which collection you are viewing</p>
-    <div>
-      <p>View as List / Image</p>
-      <p>
-        Sorted by Name / Release Data / Set / Number / Rarity
-        <span>Asc / Dsc</span>
-      </p>
+  <section class="flex flex-col items-center justify-center gap-3 m-1 p-0.5">
+    <p class="text-lg">Search Results</p>
+    <div class="flex items-center gap-3 m-1 p-0.5">
+      <div>
+        <button id="dropdownViewButton"
+                type="button"
+                data-dropdown-toggle="dropdown"
+                class="font-bold bg-secondary text-white hover:bg-gray-600 rounded-lg p-2 text-center inline-flex items-center w-full">
+          View
+          <svg class="w-2.5 h-2.5 ml-2.5"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <div class="hidden z-10 bg-secondary text-white divide-y divide-primary rounded-lg shadow p-2">
+          <ul aria-labelledby="dropdownViewButton" class="text-sm">
+            <li class="block p-2">List</li>
+            <li class="block p-2">Image</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <button id="dropdownSortButton"
+                type="button"
+                data-dropdown-toggle="dropdown"
+                class="font-bold bg-secondary text-white hover:bg-gray-600 rounded-lg p-2 text-center inline-flex items-center w-full justify-center">
+          Sort
+          <svg class="w-2.5 h-2.5 ml-2.5"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <div class="hidden z-10 bg-secondary text-white divide-y divide-primary rounded-lg shadow p-2">
+          <ul aria-labelledby="dropdownViewButton" class="text-sm">
+            <li class="block p-2">Name</li>
+            <li class="block p-2">Release Date</li>
+            <li class="block p-2">Set</li>
+            <li class="block p-2">Number</li>
+            <li class="block p-2">Rarity</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <button id="dropdownOrderButton"
+                type="button"
+                data-dropdown-toggle="dropdown"
+                class="font-bold bg-secondary text-white hover:bg-gray-600 rounded-lg p-2 text-center inline-flex items-center w-full ">
+          Order
+          <svg class="w-2.5 h-2.5 ml-2.5"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <div class="hidden z-10 bg-secondary text-white divide-y divide-primary rounded-lg shadow p-2 w-full">
+          <ul aria-labelledby="dropdownViewButton" class="text-sm">
+            <li class="block p-2">Asc</li>
+            <li class="block p-2">Dsc</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div>
-      <table>
-        <thead>
+    <div class="visible relative overflow-auto">
+      <table class="w-full text-base text-left">
+        <thead class="text-lg uppercase bg-gray-200">
           <tr>
-            <th>Set</th>
-            <th>No</th>
-            <th>Name</th>
-            <th>Rarity</th>
-            <th>Types</th>
-            <th>Supertype</th>
-            <th>Subtypes</th>
-            <th>Price</th>
+            <th scope="col" class="p-3">Set</th>
+            <th scope="col" class="p-3">No</th>
+            <th scope="col" class="p-3">Name</th>
+            <th scope="col" class="p-3">Rarity</th>
+            <th scope="col" class="p-3">Types</th>
+            <th scope="col" class="p-3">Supertype</th>
+            <th scope="col" class="p-3">Subtypes</th>
+            <th scope="col" class="p-3">Price</th>
+            <th scope="col" class="p-3">Collection</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="bg-white border-b">
           <tr>
-            <td>Evolutions</td>
-            <td>11</td>
-            <td>Charizard</td>
-            <td>Rare</td>
-            <td>Fire</td>
-            <td>Pokemon</td>
-            <td>Stage 2</td>
-            <td>$54.44</td>
+            <td class="p-3">Evolutions</td>
+            <td class="p-3">11</td>
+            <td class="p-3">Charizard</td>
+            <td class="p-3">Rare</td>
+            <td class="p-3">Fire</td>
+            <td class="p-3">Pokemon</td>
+            <td class="p-3">Stage 2</td>
+            <td class="p-3">$54.44</td>
+            <td class="p-3 flex justify-center">
+              <button type="button"
+                      class="bg-danger rounded-lg p-2 text-white font-bold text-center hidden">Remove</button>
+              <button type="button"
+                      class="bg-secondary rounded-lg p-2 text-white font-bold text-center">Add</button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div>
+    <div class="grid grid-cols-5 gap-3">
       <div>
-        <a href="{% url "main:card" pk=1 %}">
+        <a href="#">
           <img height="auto"
                width="auto"
                src="https://images.pokemontcg.io/sv2/8.png"
@@ -50,7 +118,7 @@
         </a>
       </div>
       <div>
-        <a href="{% url "main:card" pk=1 %}">
+        <a href="#">
           <img height="auto"
                width="auto"
                src="https://images.pokemontcg.io/sv2/8.png"
@@ -58,7 +126,7 @@
         </a>
       </div>
       <div>
-        <a href="{% url "main:card" pk=1 %}">
+        <a href="#">
           <img height="auto"
                width="auto"
                src="https://images.pokemontcg.io/sv2/8.png"
@@ -66,7 +134,7 @@
         </a>
       </div>
       <div>
-        <a href="{% url "main:card" pk=1 %}">
+        <a href="#">
           <img height="auto"
                width="auto"
                src="https://images.pokemontcg.io/sv2/8.png"
@@ -74,7 +142,7 @@
         </a>
       </div>
       <div>
-        <a href="{% url "main:card" pk=1 %}">
+        <a href="#">
           <img height="auto"
                width="auto"
                src="https://images.pokemontcg.io/sv2/8.png"
@@ -82,7 +150,7 @@
         </a>
       </div>
       <div>
-        <a href="{% url "main:card" pk=1 %}">
+        <a href="#">
           <img height="auto"
                width="auto"
                src="https://images.pokemontcg.io/sv2/8.png"

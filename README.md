@@ -32,7 +32,7 @@ The Pokémon Trading Card Collection Builder is a web application built with Dja
    python -m venv env
    ```
 
-4. Activate the virtual enviornment:
+4. Activate the virtual environment:
 
    ```
    source env/bin/activate
@@ -47,16 +47,29 @@ The Pokémon Trading Card Collection Builder is a web application built with Dja
 6. Set up the database:
 
    ```
+   python manage.py makemigrations
    python manage.py migrate
    ```
 
-7. Run the development server:
+7. Setup tailwind
+
+   ```
+   python manage.py tailwind install
+   ```
+
+8. Run tailwind
+
+   ```
+   python manage.py tailwind start
+   ```
+
+9. Run the development server:
 
    ```
    python manage.py runserver
    ```
 
-8. Access the application by visiting http://localhost:8000 in your web browser.
+10. Access the application by visiting http://localhost:8000 in your web browser.
 
 ## Usage
 

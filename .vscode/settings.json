@@ -6,6 +6,7 @@
 		"Pokedex",
 		"pokemontcgsdk",
 		"ptcgo",
-		"tcgplayer"
+		"tcgplayer",
+		"venv"
 	]
 }

@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import Card, Collection
+from .models import *
 
-INPUT_CLASSES = "min-w-full text-sm font-medium text-gray-900"
+INPUT_CLASSES = "rounded-lg"
 
 
 class CollectionForm(forms.ModelForm):
