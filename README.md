@@ -99,7 +99,7 @@ python3 manage.py runserver
 
 ## Contributing
 
-Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request. For major changes, please open an issue first to discuss the proposed changes.
+I am not planning on updating or maintaining this project. If you would like to contribute please fork the repository.
 
 ## License
 
