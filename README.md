@@ -28,12 +28,13 @@ cd pokecards
 
 3. Create a virtual environment:
 
-```
 Install python3 and python3 venv if you haven't already
+
+```
 python3 -m venv env
 ```
 
-4. Activate the virtual environment:
+1. Activate the virtual environment:
 
 ```
 source env/bin/activate
@@ -47,25 +48,24 @@ pip install -r requirements.txt
 
 6. Set up secrets:
 
-```
 Follow this guide https://github.com/kakulukia/django-secrets
-```
 
 7. Add api key:
 
-```
 Sign up at https://dev.pokemontcg.io/
 Add api key to secrets.py created in step 6
-```
 
 8. Set up the database:
 
 ```
 python3 manage.py makemigrations
+```
+
+```
 python3 manage.py migrate
 ```
 
-9. Seed the database:
+1. Seed the database:
 
 ```
 python3 manage.py seed
