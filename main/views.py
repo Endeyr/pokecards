@@ -153,21 +153,77 @@ class CreateCollectionView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
+def is_valid_query(param):
+    return param != '' and param is not None
+
 class AdvSearchView(View):
     template_name = 'main/adv_search.html'
 
     def get(self, request):
+        cards = Card.objects.all().order_by('name')
+        
+        name = request.GET.get('name')
+        supertype = request.GET.get('supertype')
+        subtypes = request.GET.get('subtypes')
+        types = request.GET.get('types')
+        hp_min = request.GET.get('hp_min')
+        hp_max = request.GET.get('hp_max')
+        weaknesses = request.GET.get('weaknesses')
+        resistances = request.GET.get('resistances')
+        retreat_min = request.GET.get('retreat_min')
+        retreat_max = request.GET.get('retreat_max')
+        set = request.GET.get('set')
+        artist = request.GET.get('artist')
+        rarity = request.GET.get('rarity')
+        
+        if is_valid_query(name):
+            cards = cards.filter(name__icontains=name)
+            
+        elif is_valid_query(supertype):
+            cards = cards.filter(supertype=supertype)
+            
+        # Need to fix model data
+        # elif (subtypes):
+        #     cards = cards.filter(subtypes=subtypes)
+        
+        # elif (types):
+        #     cards = cards.filter(types=types)
+        
+        # elif is_valid_query(weaknesses):
+        #     cards = cards.filter(weaknesses=weaknesses)
+        
+        # elif is_valid_query(resistances):
+        #     cards = cards.filter(resistances=resistances)
+        
+        # elif is_valid_query(set):
+        #     cards = cards.filter(card_set=set)
+        
+        elif is_valid_query(artist):
+            cards = cards.filter(artist__icontains=artist)
+            
+        elif is_valid_query(rarity):
+            cards = cards.filter(rarity=rarity)
+            
+        # Need to convert hp to int
+        # if is_valid_query(hp_min):
+        #   cards = cards.filter(hp__gte=hp_min)
+            
+        # if is_valid_query(hp_max):
+        #   cards = cards.filter(hp__lt=hp_max)
+            
+        if is_valid_query(retreat_min):
+            cards = cards.filter(retreat_cost__gte=retreat_min)
+            
+        if is_valid_query(retreat_max):
+            cards = cards.filter(retreat_cost__lt=retreat_max)
+        
+        
         message = ''
-        context = {'message': message}
+        context = {'message': message, 'cards': cards}
         return render(request, self.template_name, context)
 
     def post(self, request):
+        
         message = ''
         context = {'message': message}
         return render(request, self.template_name, context)
-
-
-def search_results(request):
-    template_name = 'main/search_results.html'
-    context = {}
-    return render(request, template_name, context)

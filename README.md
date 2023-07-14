@@ -1,8 +1,8 @@
-# Pokémon Trading Card Collection Builder
+# Pokécards - Pokémon Trading Card Collection Builder
 
 ## Description
 
-The Pokémon Trading Card Collection Builder is a web application built with Django, Python, and JavaScript. It allows users to build and manage their Pokémon trading card collections online.
+Pokécards is a web application built with Django, Python, and JavaScript. It allows users to build and manage their Pokémon trading card collections online.
 
 ## Features
 
@@ -96,6 +96,7 @@ python3 manage.py runserver
 - Register a new account or log in with an existing account.
 - Explore the collection of Pokémon trading cards.
 - Add cards to your collection and manage your collection.
+- Create a user bio.
 
 ## Contributing
 
@@ -119,5 +120,43 @@ This project is not a social media or e-commerce site but built to utilize an ap
 ## Distinctiveness and Complexity
 
 ## File Explanations
+
+These are the important files for the project and their usage:
+
+# management/commands/seed.py
+
+How the user seeds the data to the project. In this file I formatted the api data then saved it to my models.py file. This allowed me to quickly access the database as users search for specific cards. An alternative approach could be using javascript to access the api at each user request but from my research, that process doesn't scale well with larger user bases as you quickly hit the api limit on the free tier. I could improve this process by properly deserializing some of the data before I save it to the database but I was having trouble working with that particular code and process so I opted for a more blunt approach of saving the more complex data into a text area then parsing through that string in the views before passing it to my template.
+
+# templates/main
+
+The main html for this project. These files handle the front end for searching, creating collections, viewing user profile, navigation, and the base index. I created a html file for each page of functionality and decided to use tailwind to style my components as I wanted a mobile first design pattern. Tailwind ended up being the best choice since it is by design mobile first.
+
+# templates/users
+
+The user html for this project. These files handle the front end for user registration and login functionality. I utilized django's builtin user creation and authentication then created these files as the font end. Again I used tailwind along with django's form model.
+
+# forms.py
+
+# models.py
+
+# urls.py
+
+# views.py
+
+# my_secrets/definitions.py
+
+# my_secrets/secrets.py
+
+# static/main.js
+
+# theme/static_src/tailwind.config.js
+
+# users/forms.py
+
+# users/urls.py
+
+# users/views.py
+
+# requirements.txt
 
 ## Additional Information

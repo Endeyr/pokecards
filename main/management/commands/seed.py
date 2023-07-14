@@ -3,7 +3,6 @@ from django.core.management.base import BaseCommand
 from ...models import *
 from my_secrets import secrets
 from datetime import datetime
-from django.utils import timezone
 
 API_KEY = secrets.API_KEY
 
