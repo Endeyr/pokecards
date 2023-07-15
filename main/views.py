@@ -4,6 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.views import View
+from django.db.models.functions import Cast
+from django.db.models import IntegerField
 
 from .forms import (
     CollectionForm,
@@ -171,7 +173,7 @@ class AdvSearchView(View):
         weaknesses = request.GET.get('weaknesses')
         resistances = request.GET.get('resistances')
         retreat_min = request.GET.get('retreat_min')
-        retreat_max = request.GET.get('retreat_max')
+        retreat_max =request.GET.get('retreat_max')
         set = request.GET.get('set')
         artist = request.GET.get('artist')
         rarity = request.GET.get('rarity')
@@ -183,20 +185,20 @@ class AdvSearchView(View):
             cards = cards.filter(supertype=supertype)
             
         # Need to fix model data
-        # elif (subtypes):
-        #     cards = cards.filter(subtypes=subtypes)
+        elif (subtypes):
+            cards = cards.filter(subtypes__icontains=subtypes)
         
-        # elif (types):
-        #     cards = cards.filter(types=types)
+        elif (types):
+            cards = cards.filter(types__icontains=types)
         
-        # elif is_valid_query(weaknesses):
-        #     cards = cards.filter(weaknesses=weaknesses)
+        elif is_valid_query(weaknesses):
+            cards = cards.filter(weaknesses__icontains=weaknesses)
         
-        # elif is_valid_query(resistances):
-        #     cards = cards.filter(resistances=resistances)
+        elif is_valid_query(resistances):
+            cards = cards.filter(resistances__icontains=resistances)
         
-        # elif is_valid_query(set):
-        #     cards = cards.filter(card_set=set)
+        elif is_valid_query(set):
+            cards = cards.filter(card_set__icontains=set)
         
         elif is_valid_query(artist):
             cards = cards.filter(artist__icontains=artist)
@@ -205,16 +207,17 @@ class AdvSearchView(View):
             cards = cards.filter(rarity=rarity)
             
         # Need to convert hp to int
-        # if is_valid_query(hp_min):
-        #   cards = cards.filter(hp__gte=hp_min)
+        if is_valid_query(hp_min):
+          cards = cards.annotate(hp_integer=Cast('hp', output_field=IntegerField())).filter(hp_integer__gte=hp_min)
             
-        # if is_valid_query(hp_max):
-        #   cards = cards.filter(hp__lt=hp_max)
+        if is_valid_query(hp_max):
+          cards = cards.annotate(hp_integer=Cast('hp', output_field=IntegerField())).filter(hp_integer__lt=hp_max)
             
         if is_valid_query(retreat_min):
             cards = cards.filter(retreat_cost__gte=retreat_min)
             
         if is_valid_query(retreat_max):
+            print(cards)
             cards = cards.filter(retreat_cost__lt=retreat_max)
         
         
