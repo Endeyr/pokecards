@@ -8,5 +8,6 @@
 		"ptcgo",
 		"tcgplayer",
 		"venv"
-	]
+	],
+	"cSpell.ignoreWords": ["csrfmiddlewaretoken"]
 }

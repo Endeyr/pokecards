@@ -1,20 +1,18 @@
 {% extends "main/base.html" %}
 {% block title %}
-  Advanced Search
+  Create Collection
 {% endblock title %}
 {% block content %}
   <section class="h-[80vh] flex flex-col justify-center items-center gap-3">
     {% if message %}<p class="bg-danger w-1/4 text-center font-extrabold">{{ message }}</p>{% endif %}
     {% if form.errors %}<p class="bg-danger w-1/4 text-center font-extrabold">{{ form.errors }}</p>{% endif %}
-    <form action="{% url 'main:adv-search' %}"
+    <form action="{% url 'main:create-collection' %}"
           method="post"
           class="flex flex-col justify-center items-end gap-1">
       {% csrf_token %}
       {{ form.as_p }}
       <div>
-        <button type="submit"
-                value="Adv-search"
-                class=" text-white p-2 m-1 rounded-full bg-secondary">Submit</button>
+        <button type="submit" class=" text-white p-2 m-1 rounded-full bg-secondary">Submit</button>
       </div>
     </form>
   </section>
