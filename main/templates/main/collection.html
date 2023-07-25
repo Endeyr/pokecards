@@ -1,10 +1,10 @@
 {% extends "main/base.html" %}
 {% block title %}
-  Collection
+  {{ collection.title }}
 {% endblock title %}
 {% block content %}
   <section class="flex flex-col items-center justify-center gap-3 m-1 p-0.5">
-    <p class="text-lg">Collection Name</p>
+    <p class="text-lg">{{ collection.title }}</p>
     <div class="flex items-center gap-3 m-1 p-0.5">
       <div>
         <button id="dropdownViewButton"
@@ -74,7 +74,7 @@
       </div>
     </div>
     <div class="visible relative overflow-auto">
-      <table class="w-full text-base text-left">
+      <table class="w-full text-base text-left border border-collapse ">
         <thead class="text-lg uppercase bg-gray-200">
           <tr>
             <th scope="col" class="p-3">Set</th>
@@ -88,75 +88,39 @@
             <th scope="col" class="p-3">Collection</th>
           </tr>
         </thead>
-        <tbody class="bg-white border-b">
-          <tr>
-            <td class="p-3">Evolutions</td>
-            <td class="p-3">11</td>
-            <td class="p-3">Charizard</td>
-            <td class="p-3">Rare</td>
-            <td class="p-3">Fire</td>
-            <td class="p-3">Pokemon</td>
-            <td class="p-3">Stage 2</td>
-            <td class="p-3">$54.44</td>
-            <td class="p-3 flex justify-center">
-              <button type="button"
-                      class="bg-danger rounded-lg p-2 text-white font-bold text-center">Remove</button>
-              <button type="button"
-                      class="bg-secondary rounded-lg p-2 text-white font-bold text-center hidden">Add</button>
-            </td>
-          </tr>
+        <tbody class="bg-white ">
+          {% for card in cards %}
+            <tr>
+              <td class="p-3 border-b border-secondary">{{ card.card_set }}</td>
+              <td class="p-3 border-b border-secondary">{{ card.number }}</td>
+              <td class="p-3 border-b border-secondary">{{ card.name }}</td>
+              <td class="p-3 border-b border-secondary">{{ card.rarity }}</td>
+              <td class="p-3 border-b border-secondary">{{ card.types }}</td>
+              <td class="p-3 border-b border-secondary">{{ card.supertype }}</td>
+              <td class="p-3 border-b border-secondary">{{ card.subtypes }}</td>
+              <td class="p-3 border-b border-secondary">{{ card.tcgplayer_prices }}</td>
+              <td class="p-3 border-b border-secondary">
+                <button type="button"
+                        class="bg-danger rounded-lg p-2 text-white font-bold text-center">Remove</button>
+                <button type="button"
+                        class="bg-secondary rounded-lg p-2 text-white font-bold text-center hidden">Add</button>
+              </td>
+            </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
     <div class="grid grid-cols-5 gap-3">
-      <div>
-        <a href="#">
-          <img height="auto"
-               width="auto"
-               src="https://images.pokemontcg.io/sv2/8.png"
-               alt="name" />
-        </a>
-      </div>
-      <div>
-        <a href="#">
-          <img height="auto"
-               width="auto"
-               src="https://images.pokemontcg.io/sv2/8.png"
-               alt="name" />
-        </a>
-      </div>
-      <div>
-        <a href="#">
-          <img height="auto"
-               width="auto"
-               src="https://images.pokemontcg.io/sv2/8.png"
-               alt="name" />
-        </a>
-      </div>
-      <div>
-        <a href="#">
-          <img height="auto"
-               width="auto"
-               src="https://images.pokemontcg.io/sv2/8.png"
-               alt="name" />
-        </a>
-      </div>
-      <div>
-        <a href="#">
-          <img height="auto"
-               width="auto"
-               src="https://images.pokemontcg.io/sv2/8.png"
-               alt="name" />
-        </a>
-      </div>
-      <div>
-        <a href="#">
-          <img height="auto"
-               width="auto"
-               src="https://images.pokemontcg.io/sv2/8.png"
-               alt="name" />
-        </a>
-      </div>
+      {% for card in cards %}
+        <div>
+          <a href="{% url 'main:card' pk=card.id %}">
+            <img height="auto"
+                 width="auto"
+                 src="{{ card.large_image }}"
+                 alt="{{ card.name }}" />
+          </a>
+        </div>
+      {% endfor %}
     </div>
   </section>
 {% endblock content %}

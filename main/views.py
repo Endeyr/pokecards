@@ -1,7 +1,7 @@
 from typing import Any
 from django import http
 from django.http.response import HttpResponse
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -158,7 +158,9 @@ def card(request, pk):
 
 @login_required
 def collection(request, pk):
-    context = {}
+    collection = get_object_or_404(Collection, pk=pk)
+    cards = collection.cards.all()
+    context = {"collection": collection, "cards": cards}
     return render(request, "main/collection.html", context)
 
 
