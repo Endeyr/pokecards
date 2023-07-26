@@ -115,26 +115,32 @@ def card(request, pk):
         )
 
     weaknesses = card.weaknesses
-    weaknesses_str = weaknesses[1:-1]
-    type_start = weaknesses_str.find("type='") + len("type='")
-    type_end = weaknesses_str.find("'", type_start)
-    weak_type = weaknesses_str[type_start:type_end]
+    weak_type = ""
+    weak_value = ""
+    if weaknesses is not None:
+        weaknesses_str = weaknesses[1:-1]
+        type_start = weaknesses_str.find("type='") + len("type='")
+        type_end = weaknesses_str.find("'", type_start)
+        weak_type = weaknesses_str[type_start:type_end]
 
-    value_start = weaknesses_str.find("value='") + len("value='")
-    value_end = weaknesses_str.find("'", value_start)
-    weak_value = weaknesses_str[value_start:value_end]
+        value_start = weaknesses_str.find("value='") + len("value='")
+        value_end = weaknesses_str.find("'", value_start)
+        weak_value = weaknesses_str[value_start:value_end]
 
     weaknesses_details = f"{weak_type}: {weak_value}"
 
     resistances = card.resistances
-    resistances_str = resistances[1:-1]
-    type_start = resistances_str.find("type='") + len("type='")
-    type_end = resistances_str.find("'", type_start)
-    res_type = resistances_str[type_start:type_end]
+    res_type = ""
+    res_value = ""
+    if resistances is not None:
+        resistances_str = resistances[1:-1]
+        type_start = resistances_str.find("type='") + len("type='")
+        type_end = resistances_str.find("'", type_start)
+        res_type = resistances_str[type_start:type_end]
 
-    value_start = resistances_str.find("value='") + len("value='")
-    value_end = resistances_str.find("'", value_start)
-    res_value = resistances_str[value_start:value_end]
+        value_start = resistances_str.find("value='") + len("value='")
+        value_end = resistances_str.find("'", value_start)
+        res_value = resistances_str[value_start:value_end]
 
     resistances_details = f"{res_type}: {res_value}"
 
