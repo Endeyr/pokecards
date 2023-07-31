@@ -7,34 +7,39 @@ from .forms import (
     UserForm,
 )
 
+from main.models import *
+
 
 class AccountView(View):
-    '''
+    """
     Class View to display user account page
-    '''
+    """
 
     def get(self, request):
-        context = {}
+        user = request.user
+        collections = Collection.objects.filter(created_by=user)
+        context = {"collections": collections}
         return render(request, "users/account.html", context)
 
 
 def profile_view(request):
-    '''
+    """
     View to allow users to update their profile
-    '''
+    """
     context = {}
-    return render(request, 'users/profile.html', context)
+    return render(request, "users/profile.html", context)
 
 
 class SignUpView(View):
-    '''
+    """
     Class-based view for user sign-up
-    '''
-    template_name = 'users/sign_up.html'
+    """
+
+    template_name = "users/sign_up.html"
 
     def get(self, request):
         form = UserForm()
-        message = ''
+        message = ""
         context = {"form": form, "message": message}
         return render(request, self.template_name, context)
 
@@ -45,7 +50,7 @@ class SignUpView(View):
             user.email = user.username
             user.save()
             login(request, user)
-            return redirect('users:account')
+            return redirect("users:account")
 
         message = "Registration failed!"
         context = {"form": form, "message": message}
@@ -53,22 +58,23 @@ class SignUpView(View):
 
 
 class SignInView(View):
-    '''
+    """
     Class-based view for user sign-in
-    '''
-    template_name = 'users/sign_in.html'
+    """
+
+    template_name = "users/sign_in.html"
 
     def get(self, request):
         context = {}
         return render(request, self.template_name, context)
 
     def post(self, request):
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST["username"]
+        password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('users:account')
+            return redirect("users:account")
         else:
             message = "Invalid username and/or password."
             context = {"message": message}
@@ -76,8 +82,8 @@ class SignInView(View):
 
 
 def sign_out(request):
-    '''
+    """
     Basic view to sign out user
-    '''
+    """
     logout(request)
-    return redirect(reverse('users:sign-in'))
+    return redirect(reverse("users:sign-in"))

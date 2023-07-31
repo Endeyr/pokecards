@@ -48,10 +48,18 @@ class Card(models.Model):
     ancient_trait_text = models.CharField(
         max_length=100, blank=True, null=True
     )  # string
-    abilities = models.TextField(blank=True, null=True)  # list(hash)
-    attacks = models.TextField(blank=True, null=True)  # list(hash)
-    weaknesses = models.TextField(blank=True, null=True)  # list(hash)
-    resistances = models.TextField(blank=True, null=True)  # list(hash)
+    ability_name = models.CharField(max_length=100, blank=True, null=True)  # list(hash)
+    ability_text = models.CharField(max_length=100, blank=True, null=True)  # list(hash)
+    ability_type = models.CharField(max_length=100, blank=True, null=True)  # list(hash)
+    attack_one = models.JSONField(blank=True, null=True)  # list(hash)
+    attack_two = models.JSONField(blank=True, null=True)  # list(hash)
+    attack_three = models.JSONField(blank=True, null=True)  # list(hash)
+    weaknesses_one = models.JSONField(blank=True, null=True)  # list(hash)
+    weaknesses_two = models.JSONField(blank=True, null=True)  # list(hash)
+    weaknesses_three = models.JSONField(blank=True, null=True)  # list(hash)
+    resistances_one = models.JSONField(blank=True, null=True)  # list(hash)
+    resistances_two = models.JSONField(blank=True, null=True)  # list(hash)
+    resistances_three = models.JSONField(blank=True, null=True)  # list(hash)
     retreat_cost = models.JSONField(blank=True, null=True)  # list(string)
     converted_retreat_cost = models.IntegerField(null=True, blank=True)  # int
     card_set = models.ForeignKey(
@@ -76,10 +84,20 @@ class Card(models.Model):
     large_image = models.URLField(blank=True, null=True)  # url
     tcgplayer_url = models.URLField(blank=True, null=True)  # url
     tcgplayer_updated_at = models.DateField(blank=True, null=True)  # date
-    tcgplayer_prices = models.TextField(blank=True, null=True)  # hash
+    tcgplayer_prices_normal = models.DecimalField(
+        blank=True, null=True, decimal_places=2, max_digits=8
+    )  # hash
+    tcgplayer_prices_holo = models.DecimalField(
+        blank=True, null=True, decimal_places=2, max_digits=8
+    )  # hash
     cardmarket_url = models.URLField(blank=True, null=True)  # url
     cardmarket_updated_at = models.DateField(blank=True, null=True)  # date
-    cardmarket_prices = models.TextField(blank=True, null=True)  # hash
+    cardmarket_prices_normal = models.DecimalField(
+        blank=True, null=True, decimal_places=2, max_digits=8
+    )  # hash
+    cardmarket_prices_holo = models.DecimalField(
+        blank=True, null=True, decimal_places=2, max_digits=8
+    )  # hash
 
     in_collection = models.BooleanField(default=False)
 

@@ -3,10 +3,27 @@
   Account
 {% endblock title %}
 {% block content %}
-  <section>
-    <h1>Hello, {{ user.first_name }}!</h1>
-    <p>Profile - This will be your additional profile details</p>
-    <p>Collections - This will loop over your collections</p>
-    <p>Cards - Number of cards you own</p>
+  <section class="h-[80vh] flex flex-col justify-center items-center gap-3">
+    <div>
+      {% if user.first_name %}
+        <h1>Hello, {{ user.first_name }}!</h1>
+      {% else %}
+        <h1>Welcome! Please fill out your profile details!</h1>
+      {% endif %}
+    </div>
+    <div>
+      <p>Edit Profile</p>
+      <div>form</div>
+    </div>
+    <div>
+      <h2>Collections</h2>
+      <ul>
+        {% for collection in collections %}
+          <li>
+            <a href="{% url 'main:collection' pk=collection.pk %}">{{ collection.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
   </section>
 {% endblock content %}
