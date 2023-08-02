@@ -1,6 +1,6 @@
 from typing import Any
 from django import http
-from django.http.response import HttpResponse
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -31,17 +31,33 @@ def index(request):
 
 def card(request, pk):
     card = Card.objects.get(id=pk)
+    card_data = getCard.find(pk)
+    attacks = card_data.attacks
+    if card_data.tcgplayer.prices.normal:
+        price = card_data.tcgplayer.prices.normal.market
+    elif card_data.tcgplayer.prices.holofoil:
+        price = card_data.tcgplayer.prices.holofoil.market
+    else:
+        price = 0.00
+    weaknesses = card_data.weaknesses
+    resistances = card_data.resistances
+    retreat_cost = card_data.retreatCost
+    subtypes = card_data.subtypes
+    hp = card_data.hp
+    types = card_data.types
+    abilities = card_data.abilities
 
     context = {
         "card": card,
-        # "attack": attack_details,
-        # "price": price_details,
-        # "weaknesses": weaknesses_details,
-        # "resistances": resistances_details,
-        # "retreat_cost": retreat_cost,
-        # "subtypes": subtypes,
-        # "types": types,
-        # "abilities": abilities_details,
+        "attacks": attacks,
+        "price": price,
+        "weaknesses": weaknesses,
+        "resistances": resistances,
+        "retreat_cost": retreat_cost,
+        "subtypes": subtypes,
+        "types": types,
+        "abilities": abilities,
+        "hp": hp,
     }
     return render(request, "main/card.html", context)
 
@@ -87,73 +103,30 @@ class AdvSearchView(View):
     template_name = "main/adv_search.html"
 
     def get(self, request):
-        cards = Card.objects.all().order_by("name")
-
-        name = request.GET.get("name")
-        supertype = request.GET.get("supertype")
-        subtypes = request.GET.get("subtypes")
-        types = request.GET.get("types")
-        hp_min = request.GET.get("hp_min")
-        hp_max = request.GET.get("hp_max")
-        weaknesses = request.GET.get("weaknesses")
-        resistances = request.GET.get("resistances")
-        retreat_min = request.GET.get("retreat_min")
-        retreat_max = request.GET.get("retreat_max")
-        set = request.GET.get("set")
-        artist = request.GET.get("artist")
-        rarity = request.GET.get("rarity")
-
-        if is_valid_query(name):
-            cards = cards.filter(name__icontains=name)
-
-        elif is_valid_query(supertype):
-            cards = cards.filter(supertype=supertype)
-
-        # Need to fix model data
-        elif subtypes:
-            cards = cards.filter(subtypes__icontains=subtypes)
-
-        elif types:
-            cards = cards.filter(types__icontains=types)
-
-        elif is_valid_query(weaknesses):
-            cards = cards.filter(weaknesses__icontains=weaknesses)
-
-        elif is_valid_query(resistances):
-            cards = cards.filter(resistances__icontains=resistances)
-
-        elif is_valid_query(set):
-            cards = cards.filter(card_set__icontains=set)
-
-        elif is_valid_query(artist):
-            cards = cards.filter(artist__icontains=artist)
-
-        elif is_valid_query(rarity):
-            cards = cards.filter(rarity=rarity)
-
-        # Need to convert hp to int
-        if is_valid_query(hp_min):
-            cards = cards.annotate(
-                hp_integer=Cast("hp", output_field=IntegerField())
-            ).filter(hp_integer__gte=hp_min)
-
-        if is_valid_query(hp_max):
-            cards = cards.annotate(
-                hp_integer=Cast("hp", output_field=IntegerField())
-            ).filter(hp_integer__lt=hp_max)
-
-        if is_valid_query(retreat_min):
-            cards = cards.filter(retreat_cost__gte=retreat_min)
-
-        if is_valid_query(retreat_max):
-            print(cards)
-            cards = cards.filter(retreat_cost__lt=retreat_max)
-
         message = ""
-        context = {"message": message, "cards": cards}
+        context = {
+            "message": message,
+        }
         return render(request, self.template_name, context)
 
     def post(self, request):
+        name = request.POST.get("name")
+        supertype = request.POST.get("supertype")
+        subtypes = request.POST.get("subtypes")
+        types = request.POST.get("types")
+        hp = request.POST.get("hp")
+        weaknesses = request.POST.get("weaknesses")
+        resistances = request.POST.get("resistances")
+        retreat_cost = request.POST.get("retreat_cost")
+        set = request.POST.get("set")
+        artist = request.POST.get("artist")
+        rarity = request.POST.get("rarity")
+
+        cards = getCard.where(q=f"name:{name}")
+
+        #     supertype:{supertype} subtypes:{subtypes} types:{types} hp:{hp} weaknesses:{weaknesses} resistances:{resistances} retreatCost:{retreat_cost} set:{set} artist:{artist} rarity:{rarity}"
+        # )
+
         message = ""
-        context = {"message": message}
-        return render(request, self.template_name, context)
+        context = {"message": message, "cards": cards}
+        return render(request, "main/search_results.html", context)

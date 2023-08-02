@@ -24,19 +24,19 @@
           <span class="font-bold">Name:</span> {{ card.name }}
         </p>
         <p class="m-1">
-          <span class="font-bold">Subtype:</span> {{ subtypes }}
+          <span class="font-bold">Subtype:</span>
+          {% for type in subtypes %}{{ type }}{% endfor %}
         </p>
         <p class="m-1">
-          <span class="font-bold">HP:</span> {{ card.hp }}
+          <span class="font-bold">HP:</span> {{ hp }}
         </p>
         <p class="m-1">
-          <span class="font-bold">Type:</span> {{ types }}
+          <span class="font-bold">Type:</span>
+          {% for type in types %}{{ type }}{% endfor %}
         </p>
-        {% for price in price_details %}
-          <p class="m-1">
-            <span class="font-bold">Price:</span> ${{ price.market }}
-          </p>
-        {% endfor %}
+        <p class="m-1">
+          <span class="font-bold">Price:</span> ${{ price }}
+        </p>
       </div>
       <hr>
       <div class="md:flex md:gap-4 md:justify-start m-1 p-0.5">
@@ -48,12 +48,14 @@
             <p>{{ ability.text }}</p>
           {% endfor %}
         </div>
-        <div class="m-1">
-          {% for attack in attack_details %}
+        <div class="flex flex-col m-1">
+          {% for attack in attacks %}
             <h3>
               <span class="font-bold">Attack:</span> {{ attack.name }}
             </h3>
-            <p>{{ attack.cost }} | {{ attack.convertedEnergyCost }}</p>
+            <p class="flex flex-row w-auto">
+              {% for cost in attack.cost %}<div>{{ cost }}</div>{% endfor %}
+            </p>
             {% if attack.damage %}
               <p>
                 <span class="font-bold">Damage:</span> {{ attack.damage }}
@@ -71,13 +73,16 @@
           </p>
         {% endif %}
         <p class="m-1">
-          <span class="font-bold">Weaknesses:</span> {{ weaknesses }}
+          <span class="font-bold">Weaknesses:</span>
+          {% for weakness in weaknesses %}{{ weakness.type }}{% endfor %}
         </p>
         <p class="m-1">
-          <span class="font-bold">Resistances:</span> {{ resistances }}
+          <span class="font-bold">Resistances:</span>
+          {% for resistance in resistances %}{{ resistance.type }}{% endfor %}
         </p>
         <p class="m-1">
-          <span class="font-bold">Retreat Cost:</span> {{ retreat_cost }}
+          <span class="font-bold">Retreat Cost:</span>
+          {% for cost in retreat_cost %}<div>{{ cost }}</div>{% endfor %}
         </p>
         <p class="m-1">
           <span class="font-bold">Artist:</span> {{ card.artist }}

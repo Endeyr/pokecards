@@ -8,7 +8,7 @@
     {% if message %}<p class="bg-success-500 w-1/4 text-center font-extrabold">{{ message }}</p>{% endif %}
     {% if form.errors %}<p class="bg-danger w-1/4 text-center font-extrabold">{{ form.errors }}</p>{% endif %}
     <form action="{% url 'main:adv-search' %}"
-          method="get"
+          method="post"
           class="flex flex-col justify-center items-end gap-2">
       {% csrf_token %}
       <div class="w-full flex justify-between items-center gap-2">
@@ -105,17 +105,11 @@
       <div class="w-full flex justify-between items-center gap-2">
         <label for="id_hp">HP:</label>
         <input type="text"
-               name="hp_min"
-               placeholder="Min HP"
+               name="hp"
+               placeholder="HP"
                class="rounded-lg"
                maxlength="4"
-               id="id_hp_min" />
-        <input type="text"
-               name="hp_max"
-               placeholder="Max HP"
-               class="rounded-lg"
-               maxlength="4"
-               id="id_hp_max" />
+               id="id_hp" />
       </div>
       <div class="w-full flex justify-between items-center gap-2">
         <label for="id_weaknesses">Weaknesses:</label>
@@ -160,17 +154,11 @@
       <div class="w-full flex justify-between items-center gap-2">
         <label for="id_retreat">Retreat Cost:</label>
         <input type="text"
-               name="retreat_min"
-               placeholder="Min Retreat"
+               name="retreat_cost"
+               placeholder="Retreat Cost"
                class="rounded-lg"
                maxlength="1"
-               id="id_retreat_min" />
-        <input type="text"
-               name="retreat_max"
-               placeholder="Max Retreat"
-               class="rounded-lg"
-               maxlength="1"
-               id="id_retreat_max" />
+               id="id_retreat_cost" />
       </div>
       <div class="w-full flex justify-between items-center gap-2">
         <label for="id_set">Set:</label>
@@ -394,163 +382,6 @@
       <ul>
         {% for card in cards %}<li>{{ card.name }}</li>{% endfor %}
       </ul>
-    </div>
-  </section>
-  <section class="hidden flex-col items-center justify-center gap-3 m-1 p-0.5">
-    <p class="text-lg">Search Results</p>
-    <p>{{ message }}</p>
-    <div class="flex items-center gap-3 m-1 p-0.5">
-      <div>
-        <button id="dropdownViewButton"
-                type="button"
-                data-dropdown-toggle="dropdown"
-                class="font-bold bg-secondary text-white hover:bg-gray-600 rounded-lg p-2 text-center inline-flex items-center w-full">
-          View
-          <svg class="w-2.5 h-2.5 ml-2.5"
-               aria-hidden="true"
-               xmlns="http://www.w3.org/2000/svg"
-               fill="none"
-               viewBox="0 0 10 6">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-          </svg>
-        </button>
-        <div class="hidden z-10 bg-secondary text-white divide-y divide-primary rounded-lg shadow p-2">
-          <ul aria-labelledby="dropdownViewButton" class="text-sm">
-            <li class="block p-2">List</li>
-            <li class="block p-2">Image</li>
-          </ul>
-        </div>
-      </div>
-      <div>
-        <button id="dropdownSortButton"
-                type="button"
-                data-dropdown-toggle="dropdown"
-                class="font-bold bg-secondary text-white hover:bg-gray-600 rounded-lg p-2 text-center inline-flex items-center w-full justify-center">
-          Sort
-          <svg class="w-2.5 h-2.5 ml-2.5"
-               aria-hidden="true"
-               xmlns="http://www.w3.org/2000/svg"
-               fill="none"
-               viewBox="0 0 10 6">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-          </svg>
-        </button>
-        <div class="hidden z-10 bg-secondary text-white divide-y divide-primary rounded-lg shadow p-2">
-          <ul aria-labelledby="dropdownViewButton" class="text-sm">
-            <li class="block p-2">Name</li>
-            <li class="block p-2">Release Date</li>
-            <li class="block p-2">Set</li>
-            <li class="block p-2">Number</li>
-            <li class="block p-2">Rarity</li>
-          </ul>
-        </div>
-      </div>
-      <div>
-        <button id="dropdownOrderButton"
-                type="button"
-                data-dropdown-toggle="dropdown"
-                class="font-bold bg-secondary text-white hover:bg-gray-600 rounded-lg p-2 text-center inline-flex items-center w-full ">
-          Order
-          <svg class="w-2.5 h-2.5 ml-2.5"
-               aria-hidden="true"
-               xmlns="http://www.w3.org/2000/svg"
-               fill="none"
-               viewBox="0 0 10 6">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-          </svg>
-        </button>
-        <div class="hidden z-10 bg-secondary text-white divide-y divide-primary rounded-lg shadow p-2 w-full">
-          <ul aria-labelledby="dropdownViewButton" class="text-sm">
-            <li class="block p-2">Asc</li>
-            <li class="block p-2">Dsc</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="visible relative overflow-auto">
-      <table class="w-full text-base text-left">
-        <thead class="text-lg uppercase bg-gray-200">
-          <tr>
-            <th scope="col" class="p-3">Set</th>
-            <th scope="col" class="p-3">No</th>
-            <th scope="col" class="p-3">Name</th>
-            <th scope="col" class="p-3">Rarity</th>
-            <th scope="col" class="p-3">Types</th>
-            <th scope="col" class="p-3">Supertype</th>
-            <th scope="col" class="p-3">Subtypes</th>
-            <th scope="col" class="p-3">Price</th>
-            <th scope="col" class="p-3">Collection</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white border-b">
-          <tr>
-            <td class="p-3">Evolutions</td>
-            <td class="p-3">11</td>
-            <td class="p-3">Charizard</td>
-            <td class="p-3">Rare</td>
-            <td class="p-3">Fire</td>
-            <td class="p-3">Pokemon</td>
-            <td class="p-3">Stage 2</td>
-            <td class="p-3">$54.44</td>
-            <td class="p-3 flex justify-center">
-              <button type="button"
-                      class="bg-danger rounded-lg p-2 text-white font-bold text-center hidden">Remove</button>
-              <button type="button"
-                      class="bg-secondary rounded-lg p-2 text-white font-bold text-center">Add</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="grid grid-cols-5 gap-3">
-      <div>
-        <a href="#">
-          <img height="auto"
-               width="auto"
-               src="https://images.pokemontcg.io/sv2/8.png"
-               alt="name" />
-        </a>
-      </div>
-      <div>
-        <a href="#">
-          <img height="auto"
-               width="auto"
-               src="https://images.pokemontcg.io/sv2/8.png"
-               alt="name" />
-        </a>
-      </div>
-      <div>
-        <a href="#">
-          <img height="auto"
-               width="auto"
-               src="https://images.pokemontcg.io/sv2/8.png"
-               alt="name" />
-        </a>
-      </div>
-      <div>
-        <a href="#">
-          <img height="auto"
-               width="auto"
-               src="https://images.pokemontcg.io/sv2/8.png"
-               alt="name" />
-        </a>
-      </div>
-      <div>
-        <a href="#">
-          <img height="auto"
-               width="auto"
-               src="https://images.pokemontcg.io/sv2/8.png"
-               alt="name" />
-        </a>
-      </div>
-      <div>
-        <a href="#">
-          <img height="auto"
-               width="auto"
-               src="https://images.pokemontcg.io/sv2/8.png"
-               alt="name" />
-        </a>
-      </div>
     </div>
   </section>
 {% endblock content %}
